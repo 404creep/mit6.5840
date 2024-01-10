@@ -175,7 +175,7 @@ func shuffle(files []string) []KeyValue {
 	return kva
 }
 
-// 做完任务也需要调用rpc在协调者中将任务状态为设为已完成，以方便协调者确认任务已完成，worker与协调者程序能正常退出
+// 做完任务也需要调用rpc在协调者中将f 任务状态为设为已完成，以方便协调者确认任务已完成，worker与协调者程序能正常退出
 func callMarkDone(f *Job) Job {
 
 	args := f

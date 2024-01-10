@@ -5,14 +5,30 @@ import (
 	"time"
 )
 
-func say(s string) {
-	for i := 0; i < 5; i++ {
-		time.Sleep(100 * time.Millisecond)
-		fmt.Println(s)
+// 返回一个“返回int的函数”
+func fibonacci() func() int {
+	a := 0
+	b := 1
+	return func() int {
+		res := a
+		a = b
+		b = a + b
+		return res
 	}
+
 }
 
 func main() {
-	go say("world")
-	say("hello")
+	//go func() {
+	//	for i := 0; i < 10; i = i + 1 {
+	//		fmt.Println(i)
+	//	}
+	//}()
+	for i := 0; i < 10; i++ {
+		go func(val int) {
+			fmt.Println(val)
+		}(i)
+	}
+	fmt.Println("Finished")
+	time.Sleep(time.Second * 2)
 }
