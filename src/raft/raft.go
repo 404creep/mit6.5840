@@ -1,94 +1,15 @@
 package raft
 
-//
-// this is an outline of the API that raft must expose to
-// the service (or tester). see comments below for
-// each of these functions for more details.
-//
-// rf = Make(...)
-//   create a new Raft server.
-// rf.Start(command interface{}) (index, term, isleader)
-//   start agreement on a new log entry
-// rf.GetState() (term, isLeader)
-//   ask a Raft for its current term, and whether it thinks it is leader
-// ApplyMsg
-//   each time a new entry is committed to the log, each Raft peer
-//   should send an ApplyMsg to the service (or tester)
-//   in the same server.
-//
-
 import (
 	"6.5840/labgob"
 	"bytes"
 	"log"
 	"sort"
-	"sync"
 	"sync/atomic"
-	"time"
 
 	//	"6.5840/labgob"
 	"6.5840/labrpc"
 )
-
-// A Go object implementing a single Raft peer.
-type Raft struct {
-	mu        sync.Mutex          // Lock to protect shared access to this peer's state
-	peers     []*labrpc.ClientEnd // RPC end points of all peers
-	persister *Persister          // Object to hold this peer's persisted state
-	me        int                 // this peer's index into peers[]
-	dead      int32               // set by Kill()
-
-	// Your data here (2A, 2B, 2C).
-	// Look at the paper's Figure 2 for a description of what
-	// state a Raft server must maintain.
-
-	status Status           // 服务器的状态
-	timer  <-chan time.Time // 用于接收计时器的信号
-
-	// 外部消息, 进入总线
-	messagePipeLine chan Message
-
-	// start 传来的command
-	commandChan  chan CommandInfo
-	snapShotChan chan SnapShotInfo
-
-	applyChan  chan ApplyMsg   // 	日志都是存在这里client取（2B），但是无缓冲
-	applyQueue *UnboundedQueue // 防止applyMsg阻塞的缓冲队列
-}
-
-type Status struct {
-	// 该节点是什么角色（状态）
-	state State
-
-	// 正常情况下commitIndex与lastApplied应该是一样的，但是如果有一个新的提交，并且还未应用的话last应该要更小些
-	commitIndex int // 已知被 提交 的最大日志条目索引  (初始化为0，持续递增）
-	lastApplied int // 已被状态机 执行 的最大日志条目索引
-
-	CandidateInfo
-	LeaderInfo
-	PersistInfo
-}
-
-type PersistInfo struct {
-	// 所有的servers拥有的变量:
-	CurrentTerm       int        // 记录当前的任期
-	VotedFor          int        // 记录当前的任期把票投给了谁
-	Logs              []LogEntry //  first index is 1 日志条目数组，包含了状态机要执行的指令集，以及收到领导时的任期号
-	LastIncludedIndex int        //该索引以及之前的所有条目都已经被快照覆盖
-	LastIncludedTerm  int
-}
-type CandidateInfo struct {
-	receiveVoteNum int // 收到的选票数
-}
-
-type LeaderInfo struct {
-	// leader拥有的可见变量，用来管理他的follower(leader经常修改的）
-	// nextIndex与matchIndex初始化长度应该为len(peers)，Leader对于每个Follower都记录他的nextIndex和matchIndex
-	// nextIndex指的是下一个的appendEntries要从哪里开始
-	// matchIndex指的是已知的某follower的log与leader的log最大匹配到第几个Index,已经apply
-	nextIndex  []int // 对于每一个server，需要发送给他下一个日志条目的索引值（初始化为leader日志index+1,那么范围就对标len）
-	matchIndex []int // 对于每一个server，已经复制给该server的最后日志条目下标
-}
 
 func (rf *Raft) Step() {
 	rf.electionTimer()
@@ -186,6 +107,7 @@ func (rf *Raft) Step() {
 					if msg.VoteGranted {
 						rf.status.receiveVoteNum++
 						if rf.status.receiveVoteNum > len(rf.peers)/2 {
+							rf.debug("received %v votes,be leader,peerNum:%v", rf.status.receiveVoteNum, len(rf.peers))
 							rf.status.state = Leader
 							/*
 								(Reinitialized after election)
@@ -305,14 +227,54 @@ func (rf *Raft) Step() {
 					}
 					// 有该preLog，但是term不匹配
 					if rf.status.Logs[msg.PrevLogIndex].Term != msg.PrevLogTerm {
+						conflictTerm := rf.status.Logs[msg.PrevLogIndex].Term
+						conflictIndex := rf.findFirstLogIndexByTerm(conflictTerm)
+						go func(term, conflictTerm, conflictIndex int) {
+							rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
+								ReqTerm:       msg.Term,
+								Term:          term,
+								Success:       false,
+								ConflictIndex: conflictIndex,
+								ConflictTerm:  conflictTerm,
+							})
+						}(rf.status.CurrentTerm, conflictTerm, conflictIndex)
+						break
+					}
+
+					// preLog匹配成功，开始复制日志
+					for _, entry := range entry {
 
 					}
+					//执行新的已经commit日志
+					rf.applyCommittedLogs(msg.LeaderCommit)
+					go func(term int) {
+						rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
+							Id:      rf.me,
+							ReqTerm: msg.Term,
+							Term:    term,
+							Success: true,
+						})
+					}(rf.status.CurrentTerm)
 				case *appendEntriesReply:
 					if rf.status.state != Leader || msg.Term < rf.status.CurrentTerm ||
 						msg.ReqTerm != rf.status.CurrentTerm {
 						break
 					}
-
+					// 日志复制成功，更新nextIndex和matchIndex
+					if msg.Success {
+						rf.status.nextIndex[msg.Id] = max(rf.status.nextIndex[msg.Id], msg.LastLogIndex+1)
+						rf.status.matchIndex[msg.Id] = msg.LastLogIndex
+						rf.updateCommitIndex()
+					} else {
+						// 日志复制失败，回退nextIndex,重新发送
+						lastLogIndexOfTerm, ok := rf.findLastLogIndex(msg.ConflictTerm)
+						if ok {
+							rf.status.nextIndex[msg.Id] = lastLogIndexOfTerm + 1
+						} else {
+							rf.status.nextIndex[msg.Id] = min(msg.ConflictIndex, rf.status.nextIndex[msg.Id])
+						}
+						rf.leaderSendLogs(msg.Id)
+					}
 				}
 
 			}
@@ -344,7 +306,6 @@ func (rf *Raft) handleTimeOut() {
 					LastLogTerm,
 				})
 			}(i, rf.status.CurrentTerm, rf.getLastLogIndex(), rf.getLastLogTerm())
-
 		}
 	// 如果是candidate超时, 那么term+1, 区分上一选举周期，重新开始选举
 	case Candidate:
@@ -473,15 +434,7 @@ func (rf *Raft) leaderSendLogs(server int) {
 	}
 }
 
-//----------------------------------------------------日志压缩(快照）部分--------------------------------
-
-// save Raft's persistent state to stable storage,
-// where it can later be retrieved after a crash and restart.
-// see paper's Figure 2 for a description of what should be persistent.
-// before you've implemented snapshots, you should pass nil as the
-// second argument to persister.Save().
-// after you've implemented snapshots, pass the current snapshot
-// (or nil if there's not yet a snapshot).
+// ----------------------------------------------------日志持久化/压缩(快照）部分--------------------------------
 func (rf *Raft) persist(snapShot []byte) {
 	// Your code here (2C).
 	// Example:
@@ -533,10 +486,6 @@ func (rf *Raft) ProcessApplyQueue() {
 	}
 }
 
-// the service says it has created a snapshot that has
-// all info up to and including index. this means the
-// service no longer needs the log through (and including)
-// that index. Raft should now trim its log as much as possible.
 func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	respChan := make(chan struct{})
 	rf.snapShotChan <- SnapShotInfo{
@@ -547,15 +496,6 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	<-respChan
 }
 
-// the tester doesn't halt goroutines created by Raft after each test,
-// but it does call the Kill() method. your code can use killed() to
-// check whether Kill() has been called. the use of atomic avoids the
-// need for a lock.
-//
-// the issue is that long-running goroutines use memory and may chew
-// up CPU time, perhaps causing later tests to fail and generating
-// confusing debug output. any goroutine with a long-running loop
-// should call killed() to check whether it should stop.
 func (rf *Raft) Kill() {
 	atomic.StoreInt32(&rf.dead, 1)
 	// Your code here, if desired.
@@ -566,15 +506,6 @@ func (rf *Raft) killed() bool {
 	return z == 1
 }
 
-// the service or tester wants to create a Raft server. the ports
-// of all the Raft servers (including this one) are in peers[]. this
-// server's port is peers[me]. all the servers' peers[] arrays
-// have the same order. persister is a place for this server to
-// save its persistent state, and also initially holds the most
-// recent saved state, if any. applyCh is a channel on which the
-// tester or service expects Raft to send ApplyMsg messages.
-// Make() must return quickly, so it should start goroutines
-// for any long-running work.
 func Make(peers []*labrpc.ClientEnd, me int,
 	persister *Persister, applyCh chan ApplyMsg) *Raft {
 	rf := &Raft{
@@ -619,18 +550,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	return rf
 }
 
-// the service using Raft (e.g. a k/v server) wants to start
-// agreement on the next command to be appended to Raft's log. if this
-// server isn't the leader, returns false. otherwise start the
-// agreement and return immediately. there is no guarantee that this
-// command will ever be committed to the Raft log, since the leader
-// may fail or lose an election. even if the Raft instance has been killed,
-// this function should return gracefully.
-//
-// the first return value is the index that the command will appear at
-// if it's ever committed. the second return value is the current
-// term. the third return value is true if this server believes it is
-// the leader.
+// start agreement on a new log entry
 // 调用raft中的start函数，对leader节点写入log (然后检测log是否成功其实就是通过applyChan协程一直检测)
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	respChan := make(chan CommandRespInfo)

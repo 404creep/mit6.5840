@@ -35,67 +35,6 @@ func (s State) String() string {
 	}
 }
 
-type LogEntry struct {
-	Term     int
-	LogIndex int
-	Command  interface{}
-}
-
-type CommandInfo struct {
-	Command  interface{}
-	RespChan chan CommandRespInfo
-}
-type CommandRespInfo struct {
-	Term     int
-	Index    int
-	IsLeader bool
-}
-
-type SnapShotInfo struct {
-	Index    int
-	SnapShot []byte
-	RespChan chan struct{}
-}
-
-type InstallSnapshotArgs struct {
-	Term             int    // 发送请求方的任期
-	LeaderId         int    // 请求方的LeaderId
-	LastIncludeIndex int    // 快照最后applied的日志下标
-	LastIncludeTerm  int    // 快照最后applied时的当前任期
-	Data             []byte // 快照区块的原始字节流数据
-	//Done bool
-}
-
-type InstallSnapshotReply struct {
-	Term int
-}
-
-type AppendEntriesReply struct {
-	Term    int  // leader的term可能是过时的，此时收到的Term用于更新他自己
-	Success bool //	如果follower与Args中的PreLogIndex/PreLogTerm都匹配才会接过去新的日志（追加），不匹配直接返回false
-}
-
-// as each Raft peer becomes aware that successive log entries are
-// committed, the peer should send an ApplyMsg to the service (or
-// tester) on the same server, via the applyCh passed to Make(). set
-// CommandValid to true to indicate that the ApplyMsg contains a newly
-// committed log entry.
-//
-// in part 2D you'll want to send other kinds of messages (e.g.,
-// snapshots) on the applyCh, but set CommandValid to false for these
-// other uses.
-type ApplyMsg struct {
-	CommandValid bool
-	Command      interface{}
-	CommandIndex int
-
-	//For 2D:
-	SnapshotValid bool
-	Snapshot      []byte
-	SnapshotTerm  int
-	SnapshotIndex int
-}
-
 type UnboundedQueue struct {
 	mu       sync.Mutex
 	notEmpty *sync.Cond
