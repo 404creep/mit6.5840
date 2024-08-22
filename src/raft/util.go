@@ -22,8 +22,8 @@ const (
 )
 
 // 为 State 类型实现 String() 方法
-func (s State) String() string {
-	switch s {
+func (s *State) String() string {
+	switch *s {
 	case Follower:
 		return "Follower"
 	case Candidate:
@@ -104,13 +104,9 @@ func (rf *Raft) timerTimeOut() {
 // 1. 候选人最后一条Log条目的任期号大于本地最后一条Log条目的任期号；
 // 2. 或者，候选人最后一条Log条目的任期号等于本地最后一条Log条目的任期号，且候选人的Log记录长度大于等于本地Log记录的长度
 func (rf *Raft) isLogUpToDate(msgLastLogIndex int, msgLastLogTerm int) bool {
-	lastIndex := rf.getLastLogIndex()
-	lastTerm := rf.getLastLogTerm()
+	lastIndex := rf.LastLogEntry().LogIndex
+	lastTerm := rf.LastLogEntry().Term
 	return msgLastLogTerm > lastTerm || (msgLastLogTerm == lastTerm && msgLastLogIndex >= lastIndex)
-}
-
-func (rf *Raft) isMatchPrevLog(index int, term int) bool {
-	return index >= len(rf.status.Logs) || rf.status.Logs[index].Term != term
 }
 
 func (rf *Raft) findFirstLogIndexByTerm(term int) int {
@@ -122,33 +118,6 @@ func (rf *Raft) findFirstLogIndexByTerm(term int) int {
 	return -1
 }
 
-func (rf *Raft) getLogByIndex(index int) (LogEntry, bool) {
-	offsetIndex := index - rf.status.Logs[0].LogIndex
-	if offsetIndex < 0 || offsetIndex >= len(rf.status.Logs) {
-		return LogEntry{}, false
-	}
-	return rf.status.Logs[offsetIndex], true
-}
-
-// 获取最后的下标(代表已存储），lastIdx可能因为快照而改变
-func (rf *Raft) getLastLogIndex() int {
-	lastIdx := len(rf.status.Logs) - 1
-	if lastIdx < 0 {
-		rf.debug("getLastLogIndex: Logs is empty")
-		return -1
-	}
-	return rf.status.Logs[lastIdx].LogIndex
-}
-
-// 获取最后的任期
-func (rf *Raft) getLastLogTerm() int {
-	if len(rf.status.Logs) == 0 {
-		return 0
-	} else {
-		return rf.status.Logs[len(rf.status.Logs)-1].Term
-	}
-}
-
 // return CurrentTerm and whether this server believes it is the leader.
 // 测试代码里面会调用raft.go中的getState方法，判断你当前的任期和是否是领导人
 func (rf *Raft) GetState() (int, bool) {
@@ -156,4 +125,8 @@ func (rf *Raft) GetState() (int, bool) {
 	defer rf.mu.Unlock()
 	// Your code here (2A).
 	return rf.status.CurrentTerm, rf.status.state == Leader
+}
+
+func (rf *Raft) LastLogEntry() LogEntry {
+	return rf.status.Logs.LastLogEntry()
 }

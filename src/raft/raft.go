@@ -42,21 +42,25 @@ func (rf *Raft) Step() {
 				case Leader:
 					rf.status.Logs = append(rf.status.Logs, LogEntry{
 						rf.status.CurrentTerm,
-						rf.getLastLogIndex() + 1, // todo 这里的logIndex应该是递增的
+						rf.LastLogEntry().LogIndex + 1, // todo 这里的logIndex应该是递增的
 						commandInfo.Command,
 					})
 					rf.persist(nil)
-					go func(term, index int) {
+					go func(term, logIndex int) {
 						respChan := commandInfo.RespChan
 						respChan <- CommandRespInfo{
 							Term:     term,
-							Index:    index,
+							Index:    logIndex,
 							IsLeader: true,
 						}
-					}(rf.status.CurrentTerm, rf.getLastLogIndex())
+					}(rf.status.CurrentTerm, rf.LastLogEntry().LogIndex)
 					// 为了尽快同步日志并返回客户端, 需要让定时器尽快过期
 					rf.timerTimeOut()
 				}
+			case snapshotInfo := <-rf.snapShotChan:
+				rf.debug("get snapshot command,index=%v logs=%v",
+					snapshotInfo.Index, rf.status.Logs)
+
 			case intput := <-rf.messagePipeLine:
 				if rf.status.CurrentTerm < intput.Term {
 					rf.status.CurrentTerm = intput.Term
@@ -118,7 +122,7 @@ func (rf *Raft) Step() {
 								known to be replicated on server(initialized to 0, increases monotonically)
 								Leader 认为该 Follower 还没有复制任何日志条目
 							*/
-							nextIndex := rf.getLastLogIndex() + 1
+							nextIndex := len(rf.status.Logs)
 							for i := 0; i < len(rf.peers); i++ {
 								rf.status.nextIndex[i] = nextIndex
 								rf.status.matchIndex[i] = 0
@@ -213,7 +217,7 @@ func (rf *Raft) Step() {
 					rf.electionTimer()
 					// 快速回退，不断回退到leader发来的preLogIndex的term
 					// todo 没有该preLog， conflictIndex = len(rf.Logs),conflictTerm=-1
-					if msg.PrevLogIndex > rf.getLastLogIndex() {
+					if msg.PrevLogIndex > len(rf.status.Logs)-1 {
 						go func(term, conflictIndex int) {
 							rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
 								ReqTerm:       msg.Term,
@@ -282,6 +286,25 @@ func (rf *Raft) Step() {
 	}
 }
 
+// 向所有节点发送投票请求,发起投票请求时候比较的应该是LogIndex，而不是log长度
+func (rf *Raft) sendVoteRequestToPeers() {
+	// 外部会共享这个变量, 为了并发安全拷贝一份
+	lastLogEntry := rf.LastLogEntry()
+	for i := range rf.peers {
+		if i == rf.me {
+			continue
+		}
+		go func(i, term, LastLogIdx, LastLogTerm int) {
+			rf.sendRequestVoteRequest(i, &requestVoteRequest{
+				term,
+				rf.me,
+				LastLogIdx,
+				LastLogTerm,
+			})
+		}(i, rf.status.CurrentTerm, lastLogEntry.LogIndex, lastLogEntry.Term)
+	}
+}
+
 func (rf *Raft) handleTimeOut() {
 	switch rf.status.state {
 	// 如果是follower超时, 那么进入candidate状态
@@ -292,21 +315,8 @@ func (rf *Raft) handleTimeOut() {
 		rf.status.VotedFor = rf.me
 		rf.status.CurrentTerm++
 		rf.persist(nil)
-
 		rf.electionTimer()
-		for i := range rf.peers {
-			if i == rf.me {
-				continue
-			}
-			go func(i, term, LastLogIdx, LastLogTerm int) {
-				rf.sendRequestVoteRequest(i, &requestVoteRequest{
-					term,
-					rf.me,
-					LastLogIdx,
-					LastLogTerm,
-				})
-			}(i, rf.status.CurrentTerm, rf.getLastLogIndex(), rf.getLastLogTerm())
-		}
+		rf.sendVoteRequestToPeers()
 	// 如果是candidate超时, 那么term+1, 区分上一选举周期，重新开始选举
 	case Candidate:
 		rf.debug("timeout,retrying,logs=%v", rf.status.Logs)
@@ -314,20 +324,7 @@ func (rf *Raft) handleTimeOut() {
 		rf.status.receiveVoteNum = 1
 		rf.persist(nil)
 		rf.electionTimer()
-		for i := range rf.peers {
-			if i == rf.me {
-				continue
-			}
-			go func(i, term, LastLogIdx, LastLogTerm int) {
-				rf.sendRequestVoteRequest(i, &requestVoteRequest{
-					term,
-					rf.me,
-					LastLogIdx,
-					LastLogTerm,
-				})
-			}(i, rf.status.CurrentTerm, rf.getLastLogIndex(), rf.getLastLogTerm())
-
-		}
+		rf.sendVoteRequestToPeers()
 	// 如果是leader超时, 那么发送心跳
 	case Leader:
 		rf.debug("timeout,send heartbeat,logs=%v", rf.status.Logs)
@@ -486,6 +483,7 @@ func (rf *Raft) ProcessApplyQueue() {
 	}
 }
 
+// 周期性快照
 func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	respChan := make(chan struct{})
 	rf.snapShotChan <- SnapShotInfo{

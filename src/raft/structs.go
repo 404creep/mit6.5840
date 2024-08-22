@@ -47,10 +47,10 @@ type Status struct {
 
 type PersistInfo struct {
 	// 所有的servers拥有的变量:
-	CurrentTerm       int        // 记录当前的任期
-	VotedFor          int        // 记录当前的任期把票投给了谁
-	Logs              []LogEntry //  first index is 1 日志条目数组，包含了状态机要执行的指令集，以及收到领导时的任期号
-	LastIncludedIndex int        //该索引以及之前的所有条目都已经被快照覆盖
+	CurrentTerm       int  // 记录当前的任期
+	VotedFor          int  // 记录当前的任期把票投给了谁
+	Logs              Logs //  first index is 1 日志条目数组，包含了状态机要执行的指令集，以及收到领导时的任期号
+	LastIncludedIndex int  //该索引以及之前的所有条目都已经被快照覆盖
 	LastIncludedTerm  int
 }
 type CandidateInfo struct {
@@ -61,12 +61,6 @@ type LeaderInfo struct {
 	//这里的index都是数组下标，不是对应的logIndex
 	nextIndex  []int // 对于每一个server，需要发送给他下一个日志条目的索引值（初始化为leader日志index+1,那么范围就对标len）
 	matchIndex []int // 某follower的log与leader的log最大匹配到第几个Index,已经apply
-}
-
-type LogEntry struct {
-	Term     int
-	LogIndex int
-	Command  interface{}
 }
 
 type CommandInfo struct {
