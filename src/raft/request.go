@@ -35,9 +35,11 @@ type appendEntriesReply struct {
 	ReqTerm int
 	Term    int
 	Success bool
+
 	// 快速回退
-	ConflictIndex int
-	ConflictTerm  int
+	ConflictTerm  int //follower中与Leader的preLog冲突的Log对应的任期号
+	ConflictIndex int //follower中任期号为conflictTerm的第一条LogIndex
+	LogLength     int //follower中的日志长度
 }
 
 type installSnapshotRequest struct {
