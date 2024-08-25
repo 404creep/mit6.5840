@@ -50,7 +50,7 @@ type PersistInfo struct {
 	CurrentTerm       int  // 记录当前的任期
 	VotedFor          int  // 记录当前的任期把票投给了谁
 	Logs              Logs //  first index is 1 日志条目数组，包含了状态机要执行的指令集，以及收到领导时的任期号
-	LastIncludedIndex int  //该索引以及之前的所有条目都已经被快照覆盖
+	LastIncludedIndex int  //该LogIndex以及之前的所有条目都已经被快照覆盖
 	LastIncludedTerm  int
 }
 type CandidateInfo struct {
@@ -69,14 +69,14 @@ type CommandInfo struct {
 }
 type CommandRespInfo struct {
 	Term     int
-	Index    int
+	LogIndex int
 	IsLeader bool
 }
 
 type SnapShotInfo struct {
-	Index    int
-	SnapShot []byte
-	RespChan chan struct{}
+	LastIncludedLogIndex int
+	SnapShot             []byte
+	RespChan             chan struct{}
 }
 
 type InstallSnapshotArgs struct {

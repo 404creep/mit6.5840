@@ -115,6 +115,7 @@ func (rf *Raft) findFirstLogIndexByTerm(term int) int {
 			return l.LogIndex
 		}
 	}
+	rf.debug("dont find log ")
 	return -1
 }
 
@@ -129,4 +130,14 @@ func (rf *Raft) GetState() (int, bool) {
 
 func (rf *Raft) LastLogEntry() LogEntry {
 	return rf.status.Logs.LastLogEntry()
+}
+
+func (rf *Raft) LogIndex2Idx(funcName string, logIndex int) int {
+	idx := logIndex - rf.status.Logs[0].LogIndex
+	if idx < 0 || idx >= len(rf.status.Logs) {
+		rf.debug("%v LogIndex2Idx err, idx=%v,logIndex=%v,log[0].LogIndex=%v,len(log)=%v",
+			funcName, idx, logIndex, rf.status.Logs[0].LogIndex, len(rf.status.Logs))
+		return -1
+	}
+	return idx
 }

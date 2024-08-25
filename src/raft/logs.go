@@ -15,7 +15,6 @@ func (logEntry *LogEntry) ToBytes() []byte {
 	buf := bytes.NewBuffer(nil)
 	en := labgob.NewEncoder(buf)
 	en.Encode(*logEntry)
-
 	return buf.Bytes()
 }
 
@@ -37,9 +36,13 @@ func (logs *Logs) LastIdx() int {
 	return len(*logs) - 1
 }
 
-func (logs *Logs) GetLogEntryByLogIndex(logIndex int) LogEntry {
+func (logs *Logs) GetLogEntryByLogIndex(logIndex int) (LogEntry, bool) {
 	// 计算实际的切片索引
-	return (*logs)[logIndex-(*logs)[0].LogIndex]
+	idx := logIndex - (*logs)[0].LogIndex
+	if idx < 0 || idx >= len(*logs) {
+		return LogEntry{}, false
+	}
+	return (*logs)[idx], true
 }
 
 // 裁剪日志，保留从 logIndex 对应的日志开始的部分
@@ -48,7 +51,7 @@ func (logs *Logs) TrimFrontLogs(logIndex int) {
 		return
 	}
 	// 获取日志条目
-	targetLog := logs.GetLogEntryByLogIndex(logIndex)
+	targetLog, _ := logs.GetLogEntryByLogIndex(logIndex)
 	startIdx := targetLog.LogIndex - (*logs)[0].LogIndex
 
 	// 错误处理：索引超出范围
@@ -71,14 +74,17 @@ func (logs *Logs) TrimBackLogs(logIndex int) {
 		return
 	}
 	// 获取日志条目
-	targetLog := logs.GetLogEntryByLogIndex(logIndex)
+	targetLog, ok := logs.GetLogEntryByLogIndex(logIndex)
 	endIdx := targetLog.LogIndex - (*logs)[0].LogIndex
-
-	// 错误处理：索引超出范围
-	if endIdx < 0 {
+	// 错误处理：索引超出范围 或者 没有LogIndex的日志
+	if endIdx < 0 || !ok {
 		endIdx = 0
 	}
 	// 裁剪日志切片
 	*logs = (*logs)[:endIdx]
 
+}
+
+func (logs *Logs) Copy() Logs {
+	return append(Logs{}, *logs...)
 }

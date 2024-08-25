@@ -25,6 +25,5 @@ cd .\6.5840\src\raft\
 go test -run 2A
 ```
 
-
 ### raft部分框架图
 ![img.png](img.png)

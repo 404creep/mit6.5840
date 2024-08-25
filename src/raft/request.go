@@ -31,10 +31,12 @@ type appendEntriesRequest struct {
 }
 
 type appendEntriesReply struct {
-	Id      int
-	ReqTerm int
-	Term    int
-	Success bool
+	Id              int
+	ReqTerm         int
+	ReqPrevLogIndex int //方便日志排查，请求logIndex也返回
+	ReqLogLen       int //appendEntries的长度，方便更新nextIndex、matchIndex
+	Term            int
+	Success         bool
 
 	// 快速回退
 	ConflictTerm  int //follower中与Leader的preLog冲突的Log对应的任期号
@@ -56,6 +58,7 @@ type installSnapshotReply struct {
 	ReqLastIncludedTerm  int
 	Id                   int
 	Term                 int
+	Success              bool
 }
 
 // 外部调用, 会进入这里来
@@ -123,4 +126,53 @@ func (rf *Raft) sendInstallSnapshotRequest(server int, args *installSnapshotRequ
 
 func (rf *Raft) sendInstallSnapshotReply(server int, args *installSnapshotReply) {
 	rf.peers[server].Call("Raft.InstallSnapshotReply", args, &empty{})
+}
+
+// 向所有节点发送投票请求,发起投票请求时候比较的应该是LogIndex，而不是log长度
+func (rf *Raft) sendVoteRequestToPeers() {
+	// 外部会共享这个变量, 为了并发安全拷贝一份
+	lastLogEntry := rf.LastLogEntry()
+	for i := range rf.peers {
+		if i == rf.me {
+			continue
+		}
+		go func(i, term, LastLogIdx, LastLogTerm int) {
+			rf.sendRequestVoteRequest(i, &requestVoteRequest{
+				term,
+				rf.me,
+				LastLogIdx,
+				LastLogTerm,
+			})
+		}(i, rf.status.CurrentTerm, lastLogEntry.LogIndex, lastLogEntry.Term)
+	}
+}
+
+func (rf *Raft) sendInstallSnapshotReplyToLeader(msg *installSnapshotRequest, term int, success bool) {
+	rf.sendInstallSnapshotReply(msg.LeaderId, &installSnapshotReply{
+		ReqTerm:              msg.Term,
+		Term:                 term,
+		Id:                   rf.me,
+		ReqLastIncludedIndex: msg.LastIncludedIndex,
+		ReqLastIncludedTerm:  msg.LastIncludedTerm,
+		Success:              success,
+	})
+}
+
+func (rf *Raft) sendRequestVoteReplyToCandidate(voteGranted bool, term int, msg *requestVoteRequest) {
+	rf.sendRequestVoteReply(msg.CandidateId, &requestVoteReply{
+		msg.Term,
+		term,
+		voteGranted,
+	})
+}
+
+func (rf *Raft) sendAppendEntriesReplyToLeader(success bool, term int, msg *appendEntriesRequest) {
+	rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
+		Id:              rf.me,
+		ReqTerm:         msg.Term,
+		ReqPrevLogIndex: msg.PrevLogIndex,
+		ReqLogLen:       len(msg.Entries),
+		Term:            term,
+		Success:         success,
+	})
 }
