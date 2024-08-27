@@ -88,7 +88,7 @@ func (rf *Raft) Step() {
 					rf.debug("received RequestVoteRequest from %v, remote lastLog (index=%v, term=%v), remote term=%v",
 						msg.CandidateId, msg.LastLogIndex, msg.LastLogTerm, msg.Term)
 					if rf.status.state == Follower && rf.status.VotedFor == -1 &&
-						rf.status.CurrentTerm == msg.Term && rf.isLogUpToDate(msg.LastLogTerm, msg.LastLogIndex) {
+						rf.status.CurrentTerm == msg.Term && rf.isLogUpToDate(msg.LastLogIndex, msg.LastLogTerm) {
 						rf.status.VotedFor = msg.CandidateId
 						rf.persist(nil)
 						rf.debug("vote for %v,reqTerm=%v,logs=%v", msg.CandidateId, msg.Term, rf.status.Logs)
@@ -192,14 +192,20 @@ func (rf *Raft) Step() {
 						go rf.sendAppendEntriesReplyToLeader(false, rf.status.CurrentTerm, msg)
 						break
 					}
-					rf.debug("receive appendEntriesRequest from %v,remoteTerm=%v,len of entries=%v,preLog(index=%v term=%v),self logs = %v",
-						msg.LeaderId, msg.Term, len(msg.Entries), msg.PrevLogIndex, msg.PrevLogTerm, rf.status.Logs)
+
 					// rf.term == msg.term
 					// fixme 重置并持久化状态
 					if rf.status.state == Candidate {
 						rf.status.state = Follower
 					}
 					rf.electionTimer()
+					// 收到心跳
+					if msg.Entries == nil {
+						rf.debug("receive heartbeat from %v,logs=%v", msg.LeaderId, rf.status.Logs)
+					} else {
+						rf.debug("receive appendEntriesRequest from %v,remoteTerm=%v,len of entries=%v,preLog(index=%v term=%v),self logs = %v",
+							msg.LeaderId, msg.Term, len(msg.Entries), msg.PrevLogIndex, msg.PrevLogTerm, rf.status.Logs)
+					}
 					// 快速回退，不断回退到leader发来的preLogIndex的term
 					// case 3 : 没有preLog, 返回XLen
 					preLogEntry, ok := rf.status.Logs.GetLogEntryByLogIndex(msg.PrevLogIndex)
@@ -212,6 +218,7 @@ func (rf *Raft) Step() {
 						}
 						go func(term, logLength int) {
 							rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
+								Id:              rf.me,
 								ReqTerm:         msg.Term,
 								ReqPrevLogIndex: msg.PrevLogIndex,
 								Term:            term,
@@ -228,6 +235,7 @@ func (rf *Raft) Step() {
 						conflictIndex := rf.findFirstLogIndexByTerm(conflictTerm)
 						go func(term, conflictTerm, conflictIndex int) {
 							rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
+								Id:            rf.me,
 								ReqTerm:       msg.Term,
 								Term:          term,
 								Success:       false,
@@ -241,11 +249,26 @@ func (rf *Raft) Step() {
 					// preLog匹配成功，开始复制日志
 					preLogIdx := rf.LogIndex2Idx("get follower preLogIdx", preLogEntry.LogIndex)
 					rf.status.Logs = append(rf.status.Logs[:preLogIdx+1], msg.Entries...)
+					for _, entry := range msg.Entries {
+						if checkLog, ok := rf.status.Logs.GetLogEntryByLogIndex(entry.LogIndex); ok {
+							if checkLog.Term != entry.Term {
+								rf.debug("preLog conflict,TrimBackLogs from %v,preLogIdx=%v,log=%v", entry.LogIndex, preLogIdx, rf.status.Logs)
+								rf.status.Logs.TrimBackLogs(entry.LogIndex)
+								rf.status.Logs = append(rf.status.Logs, entry)
+							}
+						} else {
+							// 不存在该日志，直接添加
+							rf.status.Logs = append(rf.status.Logs, entry)
+						}
+					}
 					rf.debug("rf.preLog is %v, msg.preLogIndex is %v,matched, rf.newLog is %v, msgEntries=%v",
 						preLogEntry, msg.PrevLogIndex, rf.status.Logs, msg.Entries)
 					rf.persist(nil)
 					//执行新的已经commit日志
-					rf.applyCommittedLogs(msg.LeaderCommit)
+					if msg.LeaderCommit > rf.status.commitIndex {
+						rf.debug("appendEntry done,commitIndex=%v,leaderCommit=%v", rf.status.commitIndex, msg.LeaderCommit)
+						rf.applyCommittedLogs(msg.LeaderCommit)
+					}
 					go rf.sendAppendEntriesReplyToLeader(true, rf.status.CurrentTerm, msg)
 				case *appendEntriesReply:
 					if rf.status.state != Leader || msg.Term < rf.status.CurrentTerm ||
@@ -255,6 +278,7 @@ func (rf *Raft) Step() {
 					rf.debug("receiveAppendEntriesReply from %v, done=%v,reqPreLogIndex=%v", msg.Id, msg.Success, msg.ReqPrevLogIndex)
 					// 日志复制成功，更新nextIndex和matchIndex
 					if msg.Success {
+						// 防止过期reply回退nextIndex
 						rf.status.nextIndex[msg.Id] = max(rf.status.nextIndex[msg.Id], msg.ReqPrevLogIndex+msg.ReqLogLen+1)
 						rf.status.matchIndex[msg.Id] = rf.status.nextIndex[msg.Id] - 1
 						rf.debug("appendEntry %v done,nextIndex=%v,preLogIndex=%v,reqLogLen=%v",
@@ -265,14 +289,15 @@ func (rf *Raft) Step() {
 						// case 3 follower中日志太短,应该回退到lastLog的下一条
 						if msg.ConflictTerm == -1 {
 							rf.status.nextIndex[msg.Id] = rf.status.Logs[msg.LogLength].LogIndex
-						}
-						firstLogIndexOfTerm := rf.findFirstLogIndexByTerm(msg.ConflictTerm)
-						if firstLogIndexOfTerm > 0 {
-							// case 2 有该任期日志
-							rf.status.nextIndex[msg.Id] = firstLogIndexOfTerm + 1
 						} else {
-							//case 1 没有该任期的日志，nextIndex为该term的第一条日志，回退一整个term
-							rf.status.nextIndex[msg.Id] = msg.ConflictIndex
+							firstLogIndexOfTerm := rf.findFirstLogIndexByTerm(msg.ConflictTerm)
+							if firstLogIndexOfTerm > 0 {
+								// case 2 有该任期日志
+								rf.status.nextIndex[msg.Id] = firstLogIndexOfTerm + 1
+							} else {
+								//case 1 没有该任期的日志，nextIndex为该term的第一条日志，回退一整个term
+								rf.status.nextIndex[msg.Id] = msg.ConflictIndex
+							}
 						}
 						rf.leaderSendLogs(msg.Id)
 					}
@@ -318,8 +343,8 @@ func (rf *Raft) handleTimeOut() {
 //---------------------------------------------日志增量部分--------------------------------------------------
 
 func (rf *Raft) updateCommitIndex() {
+	rf.status.matchIndex[rf.me] = rf.LastLogEntry().LogIndex
 	sortedMatchIndex := append([]int(nil), rf.status.matchIndex...) // 简化复制操作
-	sortedMatchIndex[rf.me] = rf.LastLogEntry().LogIndex
 	sort.Ints(sortedMatchIndex)
 	rf.debug("sortedMatchIndex=%v", sortedMatchIndex)
 	// 计算出中位数的索引N
@@ -333,12 +358,12 @@ func (rf *Raft) updateCommitIndex() {
 	}
 }
 
-// applyCommittedLogs 负责将从oldCommitIndex到新的CommitIndex之间的日志条目应用到状态机
+// 负责将从oldCommitIndex到新的CommitIndex之间的日志条目应用到状态机
 func (rf *Raft) applyCommittedLogs(newCommitIndex int) {
 	oldCommitIdx := rf.LogIndex2Idx("[applyCommittedLogs] oldCommit", rf.status.commitIndex)
 	newCommitIdx := rf.LogIndex2Idx("[applyCommittedLogs] newCommit", newCommitIndex)
-	rf.debug("commit log, matchIndex=%v N=%v oldCommitIndex=%v oldIdx=%v, newIdx=%v",
-		rf.status.matchIndex, newCommitIndex, rf.status.commitIndex, oldCommitIdx, newCommitIdx)
+	rf.debug("commit log, matchIndex=%v N=%v oldCommitIndex=%v oldIdx=%v, newIdx=%v,logs=%v",
+		rf.status.matchIndex, newCommitIndex, rf.status.commitIndex, oldCommitIdx, newCommitIdx, rf.status.Logs)
 	rf.status.commitIndex = newCommitIndex
 	// fixme 全改为数组下标时候，比较lastIncludeIndex和lastLogIndex会有问题吗
 	for i := oldCommitIdx + 1; i <= newCommitIdx; i++ {
@@ -352,6 +377,9 @@ func (rf *Raft) applyCommittedLogs(newCommitIndex int) {
 }
 
 func (rf *Raft) leaderSendLogs(server int) {
+	if rf.status.state != Leader {
+		panic("check me")
+	}
 	if rf.status.nextIndex[server] <= rf.status.LastIncludedIndex {
 		// 如果nextIndex小于等于lastIncludedIndex，说明需要发送快照
 		snapshot := rf.persister.ReadSnapshot()
@@ -392,8 +420,8 @@ func (rf *Raft) leaderSendLogs(server int) {
 					Entries:      logs[preLogIdx+1:],
 					LeaderCommit: commitIndex,
 				})
-				rf.debug("sendAppendEntries to %v,preLogIdx=%v,lastLogIndex=%v,nextIndex=%v,lenOfLog=%v,msgEntries=%v",
-					server, preLogIdx, lastLogIndex, nextIndex[server], len(logs), logs[preLogIdx+1:])
+				rf.debug("sendAppendEntries to %v,preLogIdx=%v,lastLogIndex=%v,nextIndex=%v,lenOfLog=%v,msgEntries=%v,leaderCommitIndex=%v",
+					server, preLogIdx, lastLogIndex, nextIndex[server], len(logs), logs[preLogIdx+1:], commitIndex)
 			} else {
 				// If there are no new entries to send: send
 				// AppendEntries RPC with log entries starting at nextIndex - 1
@@ -413,7 +441,6 @@ func (rf *Raft) leaderSendLogs(server int) {
 	}
 }
 
-// ----------------------------------------------------日志持久化/压缩(快照）部分--------------------------------
 // 用来保存已经被使用过的任期号
 func (rf *Raft) persist(snapShot []byte) {
 	// Your code here (2C).
@@ -479,7 +506,6 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 
 func (rf *Raft) Kill() {
 	atomic.StoreInt32(&rf.dead, 1)
-	// Your code here, if desired.
 }
 
 func (rf *Raft) killed() bool {
