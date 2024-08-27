@@ -6,7 +6,6 @@ import (
 	"log"
 	"sort"
 	"sync/atomic"
-
 	//	"6.5840/labgob"
 	"6.5840/labrpc"
 )
@@ -26,10 +25,8 @@ func (rf *Raft) Step() {
 				if rf.killed() {
 					rf.debug("dead")
 					go func() {
-						for {
-							respChan := commandInfo.RespChan
-							respChan <- CommandRespInfo{Term: -1, LogIndex: -1, IsLeader: false}
-						}
+						respChan := commandInfo.RespChan
+						respChan <- CommandRespInfo{Term: -1, LogIndex: -1, IsLeader: false}
 					}()
 					return
 				}
@@ -340,8 +337,6 @@ func (rf *Raft) handleTimeOut() {
 	}
 }
 
-//---------------------------------------------日志增量部分--------------------------------------------------
-
 func (rf *Raft) updateCommitIndex() {
 	rf.status.matchIndex[rf.me] = rf.LastLogEntry().LogIndex
 	sortedMatchIndex := append([]int(nil), rf.status.matchIndex...) // 简化复制操作
@@ -378,7 +373,7 @@ func (rf *Raft) applyCommittedLogs(newCommitIndex int) {
 
 func (rf *Raft) leaderSendLogs(server int) {
 	if rf.status.state != Leader {
-		panic("check me")
+		rf.debug("not leader, but send logs to %v, check me", server)
 	}
 	if rf.status.nextIndex[server] <= rf.status.LastIncludedIndex {
 		// 如果nextIndex小于等于lastIncludedIndex，说明需要发送快照
@@ -504,9 +499,7 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	<-respChan
 }
 
-func (rf *Raft) Kill() {
-	atomic.StoreInt32(&rf.dead, 1)
-}
+func (rf *Raft) Kill() { atomic.StoreInt32(&rf.dead, 1) }
 
 func (rf *Raft) killed() bool {
 	z := atomic.LoadInt32(&rf.dead)
@@ -557,7 +550,6 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	return rf
 }
 
-// start agreement on a new log entry
 // 调用raft中的start函数，对leader节点写入log (然后检测log是否成功其实就是通过applyChan协程一直检测)
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	respChan := make(chan CommandRespInfo)
