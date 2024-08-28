@@ -166,15 +166,25 @@ func (rf *Raft) sendRequestVoteReplyToCandidate(voteGranted bool, term int, msg 
 	})
 }
 
-func (rf *Raft) sendAppendEntriesReplyToLeader(success bool, term int, msg *appendEntriesRequest) {
-	rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
+func (rf *Raft) sendAppendEntriesReplyToLeader(success bool, term int, msg *appendEntriesRequest, optionArgs map[string]int) {
+	reply := &appendEntriesReply{
 		Id:              rf.me,
 		ReqTerm:         msg.Term,
 		ReqPrevLogIndex: msg.PrevLogIndex,
 		ReqLogLen:       len(msg.Entries),
 		Term:            term,
 		Success:         success,
-	})
+	}
+	if val, ok := optionArgs["ConflictIndex"]; ok {
+		reply.ConflictIndex = val
+	}
+	if val, ok := optionArgs["ConflictTerm"]; ok {
+		reply.ConflictTerm = val
+	}
+	if val, ok := optionArgs["NextSendLogIndex"]; ok {
+		reply.NextSendLogIndex = val
+	}
+	rf.sendAppendEntriesReply(msg.LeaderId, reply)
 }
 
 func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogEntry, entries []LogEntry, leaderCommit int) {
@@ -186,4 +196,20 @@ func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogE
 		entries,
 		leaderCommit,
 	})
+	if len(entries) > 0 && preLog.LogIndex+1 != entries[0].LogIndex {
+		rf.debug("send entries err, preLog=%v, msg=%v", preLog, entries)
+	}
+}
+
+func (rf *Raft) sendSnapShotRequestToFollower(server int) {
+	snapshot := rf.persister.ReadSnapshot()
+	go func(term, leaderId, lastIncludedIndex, lastIncludedTerm int, snapshot []byte) {
+		rf.sendInstallSnapshotRequest(server, &installSnapshotRequest{
+			Term:              term,
+			LeaderId:          leaderId,
+			LastIncludedIndex: lastIncludedIndex,
+			LastIncludedTerm:  lastIncludedTerm,
+			Snapshot:          snapshot,
+		})
+	}(rf.status.CurrentTerm, rf.me, rf.status.LastIncludedIndex, rf.status.LastIncludedTerm, snapshot)
 }

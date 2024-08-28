@@ -135,8 +135,14 @@ func (rf *Raft) LastLogEntry() LogEntry {
 func (rf *Raft) LogIndex2Idx(funcName string, logIndex int) int {
 	idx := logIndex - rf.status.Logs[0].LogIndex
 	if idx < 0 || idx >= len(rf.status.Logs) {
-		rf.debug("%v LogIndex2Idx err, idx=%v,logIndex=%v,log[0].LogIndex=%v,len(log)=%v",
-			funcName, idx, logIndex, rf.status.Logs[0].LogIndex, len(rf.status.Logs))
+		// 处理越界错误
+		rf.debug("%v LogIndex2Idx error: index %v is out of bounds(%v),logIndex=%v, rf.Log is %v",
+			funcName, idx, len(rf.status.Logs)-1, logIndex, rf.status.Logs)
+		return -1
+	} else if rf.status.Logs[idx].LogIndex != logIndex {
+		// 处理转换错误
+		rf.debug("%v LogIndex2Idx error: logIndex mismatch at index %v, expected %v but got %v,rf.Log is %v",
+			funcName, idx, logIndex, rf.status.Logs[idx].LogIndex, rf.status.Logs)
 		return -1
 	}
 	return idx
