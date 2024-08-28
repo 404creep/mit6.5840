@@ -85,7 +85,6 @@ type InstallSnapshotArgs struct {
 	LastIncludeIndex int    // 快照最后applied的日志下标
 	LastIncludeTerm  int    // 快照最后applied时的当前任期
 	Data             []byte // 快照区块的原始字节流数据
-	//Done bool
 }
 
 type InstallSnapshotReply struct {

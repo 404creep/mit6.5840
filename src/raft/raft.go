@@ -234,21 +234,6 @@ func (rf *Raft) Step() {
 						})
 						break
 					}
-					// preLog匹配成功，开始复制日志,为防止过期request覆盖，需要先检查日志是否冲突，保持幂等性
-					// 前面找preLog时已经校验过logs[preLogIdx].LogIndex = preLogIndex
-					//preLogIdx, _ := rf.LogIndex2Idx("get follower preLogIdx", preLogEntry.LogIndex)
-					//for _, entry := range msg.Entries {
-					//	if checkLog, ok := rf.status.Logs.GetLogEntryByLogIndex(entry.LogIndex); ok {
-					//		if checkLog.Term != entry.Term {
-					//			rf.debug("preLog conflict,TrimBackLogs from %v,preLogIdx=%v,log=%v", entry.LogIndex, preLogIdx, rf.status.Logs)
-					//			rf.status.Logs.TrimBackLogs(entry.LogIndex)
-					//			rf.status.Logs = append(rf.status.Logs, entry)
-					//		}
-					//	} else {
-					//		// 不存在该日志，直接添加
-					//		rf.status.Logs = append(rf.status.Logs, entry)
-					//	}
-					//}
 
 					if msg.Entries != nil {
 						// 如果已经有最后的日志且term相等，说明msg.Entries是重复的，过期reply,直接返回成功
@@ -371,7 +356,7 @@ func (rf *Raft) updateCommitIndex() {
 
 	//If there exists an N such that N > commitIndex, a majority
 	//of matchIndex[i] ≥ N, and log[N].term == CurrentTerm:set commitIndex = N
-	// todo why 确保新CommitIndex比当前的大，且日志条目属于当前任期
+	// todo why 确保新CommitIndex比当前的大，且日志条目属于当前任期（只有leader有权力commit当前任期的日志）
 	if N > rf.status.commitIndex && rf.status.Logs[newCommitIdx].Term == rf.status.CurrentTerm {
 		rf.applyCommittedLogs(N)
 	}
@@ -379,6 +364,7 @@ func (rf *Raft) updateCommitIndex() {
 
 // 负责将从oldCommitIndex到新的CommitIndex之间的日志条目应用到状态机
 func (rf *Raft) applyCommittedLogs(newCommitIndex int) {
+	// todo oldCommitIndex可能已经被快照覆盖了，发快照的时候能更新commitIndex?
 	lastCommitIdx, ok1 := rf.LogIndex2Idx("[applyCommittedLogs] lastCommit", max(rf.status.commitIndex, rf.status.LastIncludedIndex))
 	newCommitIdx, ok2 := rf.LogIndex2Idx("[applyCommittedLogs] newCommit", newCommitIndex)
 	if !ok1 || !ok2 {
