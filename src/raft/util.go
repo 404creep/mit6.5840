@@ -9,7 +9,7 @@ import (
 )
 
 // Debugging
-const Debug = true
+const Debug = false
 
 // raft state
 type State int
@@ -132,18 +132,19 @@ func (rf *Raft) LastLogEntry() LogEntry {
 	return rf.status.Logs.LastLogEntry()
 }
 
-func (rf *Raft) LogIndex2Idx(funcName string, logIndex int) int {
+// 注意使用时候不要放在一个协程里，rf.Logs是一个slice，可能会被修改
+func (rf *Raft) LogIndex2Idx(funcName string, logIndex int) (int, bool) {
 	idx := logIndex - rf.status.Logs[0].LogIndex
 	if idx < 0 || idx >= len(rf.status.Logs) {
 		// 处理越界错误
 		rf.debug("%v LogIndex2Idx error: index %v is out of bounds(%v),logIndex=%v, rf.Log is %v",
 			funcName, idx, len(rf.status.Logs)-1, logIndex, rf.status.Logs)
-		return -1
+		return idx, false
 	} else if rf.status.Logs[idx].LogIndex != logIndex {
 		// 处理转换错误
 		rf.debug("%v LogIndex2Idx error: logIndex mismatch at index %v, expected %v but got %v,rf.Log is %v",
 			funcName, idx, logIndex, rf.status.Logs[idx].LogIndex, rf.status.Logs)
-		return -1
+		return idx, false
 	}
-	return idx
+	return idx, true
 }

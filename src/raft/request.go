@@ -196,8 +196,10 @@ func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogE
 		entries,
 		leaderCommit,
 	})
+	// fixme 3
 	if len(entries) > 0 && preLog.LogIndex+1 != entries[0].LogIndex {
 		rf.debug("send entries err, preLog=%v, msg=%v", preLog, entries)
+		panic("send entries err")
 	}
 }
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+# os.chdir(os.path.dirname(__file__))
+# python3 ./dstest.py -n 10 -p 128 2A 2B 2C 2D
 import itertools
 import math
 import signal

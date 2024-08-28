@@ -39,10 +39,20 @@ func (logs *Logs) LastIdx() int {
 func (logs *Logs) GetLogEntryByLogIndex(logIndex int) (LogEntry, bool) {
 	// 计算实际的切片索引
 	idx := logIndex - (*logs)[0].LogIndex
-	if idx < 0 || idx >= len(*logs) {
+	if idx < 0 || idx >= len(*logs) || (*logs)[idx].LogIndex != logIndex {
 		return LogEntry{}, false
 	}
 	return (*logs)[idx], true
+}
+func (logs *Logs) GetLogEntriesFromIndex(logIndex int) ([]LogEntry, bool) {
+	// 计算实际的切片索引
+	idx := logIndex - (*logs)[0].LogIndex
+	if idx < 0 || idx >= len(*logs) {
+		// 如果 logIndex 无效，返回空切片和 false
+		return nil, false
+	}
+	// 返回从 idx 开始的所有日志条目
+	return (*logs)[idx:], true
 }
 
 // 裁剪日志，保留从 logIndex 对应的日志开始的部分

@@ -1,5 +1,5 @@
 # 6.5840 Lab
-
+官方网站：https://pdos.csail.mit.edu/6.824/labs/lab-raft.html
 ## Study Notes
 
 mapreduce 结构 https://www.mubu.com/doc/2qvlcfblV6b
@@ -23,6 +23,10 @@ cd .\6.5840\src\raft\
 2. 测试某一个部分
 ```bash
 go test -run 2A
+```
+3. 测试全部
+```bash
+go test
 ```
 
 ### raft部分框架图
