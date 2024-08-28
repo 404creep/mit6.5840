@@ -39,9 +39,9 @@ type appendEntriesReply struct {
 	Success         bool
 
 	// 快速回退
-	ConflictTerm  int //follower中与Leader的preLog冲突的Log对应的任期号
-	ConflictIndex int //follower中任期号为conflictTerm的第一条LogIndex
-	LogLength     int //follower中的日志长度
+	ConflictTerm     int //follower中与Leader的preLog冲突的Log对应的任期号
+	ConflictIndex    int //follower中任期号为conflictTerm的第一条LogIndex
+	NextSendLogIndex int //follower中的最后一条日志Index+1
 }
 
 type installSnapshotRequest struct {
@@ -174,5 +174,16 @@ func (rf *Raft) sendAppendEntriesReplyToLeader(success bool, term int, msg *appe
 		ReqLogLen:       len(msg.Entries),
 		Term:            term,
 		Success:         success,
+	})
+}
+
+func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogEntry, entries []LogEntry, leaderCommit int) {
+	rf.sendAppendEntriesRequest(server, &appendEntriesRequest{
+		term,
+		rf.me,
+		preLog.LogIndex,
+		preLog.Term,
+		entries,
+		leaderCommit,
 	})
 }

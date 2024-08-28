@@ -57,7 +57,7 @@ func (rf *Raft) Step() {
 					rf.timerTimeOut()
 				}
 			case snapshotInfo := <-rf.snapShotChan:
-				rf.debug("get snapshot command,index=%v logs=%v",
+				rf.debug("get snapshot command,lastIncludedIndex=%v logs=%v",
 					snapshotInfo.LastIncludedLogIndex, rf.status.Logs)
 				// 收到log的snapshot命令, 需要进行日志裁减, 然后把新的snapshot持久化
 				lastIncludedlogEntry, ok := rf.status.Logs.GetLogEntryByLogIndex(snapshotInfo.LastIncludedLogIndex)
@@ -70,6 +70,7 @@ func (rf *Raft) Step() {
 				rf.status.LastIncludedIndex = lastIncludedlogEntry.LogIndex
 				rf.status.LastIncludedTerm = lastIncludedlogEntry.Term
 				rf.persist(snapshotInfo.SnapShot)
+				rf.debug("snapshot done,newLogs=%v", rf.status.Logs)
 				snapshotInfo.RespChan <- struct{}{}
 			case intput := <-rf.messagePipeLine:
 				if rf.status.CurrentTerm < intput.Term {
@@ -135,12 +136,14 @@ func (rf *Raft) Step() {
 					}
 					//调用Snapshot传来的请求
 				case *installSnapshotRequest:
+					rf.debug("receive InstallSnapshotRequest from %v, lastIncIdx=%v, lastIncTerm=%v, self logs=%v",
+						msg.LeaderId, msg.LastIncludedIndex, msg.LastIncludedTerm, rf.status.Logs)
 					// 进入case时候，rf.term >= msg.term
 					if msg.Term < rf.status.CurrentTerm {
 						rf.sendInstallSnapshotReplyToLeader(msg, rf.status.CurrentTerm, false)
 						break
 					}
-					// todo 为什么要持久化rf.term
+					// todo 发来的快照相当于一次心跳
 					if rf.status.state == Candidate {
 						rf.status.state = Follower
 					}
@@ -150,30 +153,35 @@ func (rf *Raft) Step() {
 						last included entry, retain log entries following it and reply
 					*/
 					entry, ok := rf.status.Logs.GetLogEntryByLogIndex(msg.LastIncludedIndex)
-					// 如果该follower没有包含快照，或者包含了但是term不匹配，删除所有的日志，只保留快照
-					if !(ok && entry.Term == msg.LastIncludedTerm) &&
-						rf.status.commitIndex < msg.LastIncludedIndex {
-						newLogs := []LogEntry{{
-							Term:     msg.LastIncludedTerm,
-							LogIndex: msg.LastIncludedIndex,
-							Command:  nil,
-						}}
-						rf.status.Logs = newLogs
-						rf.status.LastIncludedIndex = msg.LastIncludedIndex
-						rf.status.LastIncludedTerm = msg.LastIncludedTerm
-						rf.status.commitIndex = msg.LastIncludedIndex
-						rf.persist(msg.Snapshot)
-						rf.applyChan <- ApplyMsg{
-							CommandValid:  false,
-							SnapshotValid: true,
-							Snapshot:      msg.Snapshot,
-							SnapshotTerm:  msg.LastIncludedTerm,
-							SnapshotIndex: msg.LastIncludedIndex,
-						}
+					// 如果已经包含快照条目，且任期号匹配，或者提交索引大于快照的最后包含索引，直接返回
+					if (ok && entry.Term == msg.LastIncludedTerm) || rf.status.commitIndex >= msg.LastIncludedIndex {
+						rf.debug("already have snapshot,msg.lastIncIndex=%v,commitIndex=%v,logs=%v",
+							msg.LastIncludedIndex, rf.status.commitIndex, rf.status.Logs)
+						go rf.sendInstallSnapshotReplyToLeader(msg, rf.status.CurrentTerm, true)
+						break
 					}
-					// 如果已经包含了该快照，直接返回
+					// 如果没有快照的最后日志，删除所有的日志，只保留快照
+					rf.debug("dont have lastIncLog(%v),discard all log,save len(snapshot) %v", msg.LastIncludedIndex, len(msg.Snapshot))
+					newLogs := []LogEntry{{
+						Term:     msg.LastIncludedTerm,
+						LogIndex: msg.LastIncludedIndex,
+						Command:  nil,
+					}}
+					rf.status.Logs = newLogs
+					rf.status.LastIncludedIndex = msg.LastIncludedIndex
+					rf.status.LastIncludedTerm = msg.LastIncludedTerm
+					rf.status.commitIndex = msg.LastIncludedIndex
+					rf.persist(msg.Snapshot)
+					rf.applyChan <- ApplyMsg{
+						CommandValid:  false,
+						SnapshotValid: true,
+						Snapshot:      msg.Snapshot,
+						SnapshotTerm:  msg.LastIncludedTerm,
+						SnapshotIndex: msg.LastIncludedIndex,
+					}
 					go rf.sendInstallSnapshotReplyToLeader(msg, rf.status.CurrentTerm, true)
 				case *installSnapshotReply:
+					rf.debug("receive installSnapshotReply from %v,success=%v,reqLastIncludedIndex=%v", msg.Id, msg.Success, msg.ReqLastIncludedIndex)
 					if rf.status.state != Leader || !msg.Success || msg.ReqTerm != rf.status.CurrentTerm {
 						break
 					}
@@ -213,17 +221,17 @@ func (rf *Raft) Step() {
 						if msg.PrevLogIndex+len(msg.Entries) <= rf.status.commitIndex {
 							success = true
 						}
-						go func(term, logLength int) {
+						go func(term, lastLogIndex int) {
 							rf.sendAppendEntriesReply(msg.LeaderId, &appendEntriesReply{
-								Id:              rf.me,
-								ReqTerm:         msg.Term,
-								ReqPrevLogIndex: msg.PrevLogIndex,
-								Term:            term,
-								Success:         success,
-								ConflictTerm:    -1,
-								LogLength:       logLength,
+								Id:               rf.me,
+								ReqTerm:          msg.Term,
+								ReqPrevLogIndex:  msg.PrevLogIndex,
+								Term:             term,
+								Success:          success,
+								ConflictTerm:     -1,
+								NextSendLogIndex: lastLogIndex + 1,
 							})
-						}(rf.status.CurrentTerm, len(rf.status.Logs))
+						}(rf.status.CurrentTerm, rf.LastLogEntry().LogIndex)
 						break
 					}
 					// 有该preLog，但是term不匹配
@@ -243,9 +251,8 @@ func (rf *Raft) Step() {
 						break
 					}
 
-					// preLog匹配成功，开始复制日志
+					// preLog匹配成功，开始复制日志,为防止过期request覆盖，需要先检查日志是否冲突，保持幂等性
 					preLogIdx := rf.LogIndex2Idx("get follower preLogIdx", preLogEntry.LogIndex)
-					rf.status.Logs = append(rf.status.Logs[:preLogIdx+1], msg.Entries...)
 					for _, entry := range msg.Entries {
 						if checkLog, ok := rf.status.Logs.GetLogEntryByLogIndex(entry.LogIndex); ok {
 							if checkLog.Term != entry.Term {
@@ -258,8 +265,9 @@ func (rf *Raft) Step() {
 							rf.status.Logs = append(rf.status.Logs, entry)
 						}
 					}
-					rf.debug("rf.preLog is %v, msg.preLogIndex is %v,matched, rf.newLog is %v, msgEntries=%v",
-						preLogEntry, msg.PrevLogIndex, rf.status.Logs, msg.Entries)
+					if msg.Entries != nil {
+						rf.debug("rf.preLog is %v, msg.preLogIndex is %v,matched, rf.newLog is %v, msgEntries=%v", preLogEntry, msg.PrevLogIndex, rf.status.Logs, msg.Entries)
+					}
 					rf.persist(nil)
 					//执行新的已经commit日志
 					if msg.LeaderCommit > rf.status.commitIndex {
@@ -272,20 +280,42 @@ func (rf *Raft) Step() {
 						msg.ReqTerm != rf.status.CurrentTerm {
 						break
 					}
+					if preLogEntry, ok := rf.status.Logs.GetLogEntryByLogIndex(rf.status.nextIndex[msg.Id] - 1); ok {
+						// 过期的reply,preLogIndex不匹配
+						if msg.ReqPrevLogIndex != preLogEntry.LogIndex {
+							rf.debug("preLogIndex not match,preLogIndex=%v,reqPreLogIndex=%v", preLogEntry.LogIndex, msg.ReqPrevLogIndex)
+							break
+						}
+					} else {
+						rf.debug("dont find preLogIndex %v, self log is %v", rf.status.nextIndex[msg.Id], rf.status.Logs)
+						break
+					}
 					rf.debug("receiveAppendEntriesReply from %v, done=%v,reqPreLogIndex=%v", msg.Id, msg.Success, msg.ReqPrevLogIndex)
 					// 日志复制成功，更新nextIndex和matchIndex
 					if msg.Success {
 						// 防止过期reply回退nextIndex
-						rf.status.nextIndex[msg.Id] = max(rf.status.nextIndex[msg.Id], msg.ReqPrevLogIndex+msg.ReqLogLen+1)
+						newNextLogIndex := msg.ReqPrevLogIndex + msg.ReqLogLen + 1
+						if newNextLogIndex > rf.LastLogEntry().LogIndex+1 {
+							rf.debug("get reply from %v,nextIndex(%v) is too large, preIndex(%v), reqLogLen(%v), leaderLog is",
+								msg.Id, newNextLogIndex, msg.ReqPrevLogIndex, msg.ReqLogLen, rf.status.Logs)
+						}
+						rf.status.nextIndex[msg.Id] = max(rf.status.nextIndex[msg.Id], newNextLogIndex)
 						rf.status.matchIndex[msg.Id] = rf.status.nextIndex[msg.Id] - 1
-						rf.debug("appendEntry %v done,nextIndex=%v,preLogIndex=%v,reqLogLen=%v",
-							msg.Id, rf.status.nextIndex, msg.ReqPrevLogIndex, msg.ReqLogLen)
+						if msg.ReqLogLen > 0 {
+							rf.debug("appendEntry %v done,nextIndex=%v,preLogIndex=%v,reqLogLen=%v", msg.Id, rf.status.nextIndex, msg.ReqPrevLogIndex, msg.ReqLogLen)
+						}
 						rf.updateCommitIndex()
 					} else {
 						// 日志复制失败，回退nextIndex,重新发送
 						// case 3 follower中日志太短,应该回退到lastLog的下一条
 						if msg.ConflictTerm == -1 {
-							rf.status.nextIndex[msg.Id] = rf.status.Logs[msg.LogLength].LogIndex
+							nextLogEntry, ok := rf.status.Logs.GetLogEntryByLogIndex(msg.NextSendLogIndex)
+							if ok {
+								rf.status.nextIndex[msg.Id] = msg.NextSendLogIndex
+								rf.debug("appendEntry %v failed, lastIndex=%v,nextSendLog is %v", msg.Id, msg.NextSendLogIndex-1, nextLogEntry)
+							} else {
+								rf.debug("appendEntry %v failed, and dont find nextSendLogIndex %v,log is %v", msg.Id, msg.NextSendLogIndex, rf.status.Logs)
+							}
 						} else {
 							firstLogIndexOfTerm := rf.findFirstLogIndexByTerm(msg.ConflictTerm)
 							if firstLogIndexOfTerm > 0 {
@@ -299,7 +329,6 @@ func (rf *Raft) Step() {
 						rf.leaderSendLogs(msg.Id)
 					}
 				}
-
 			}
 		}
 	}
@@ -341,10 +370,11 @@ func (rf *Raft) updateCommitIndex() {
 	rf.status.matchIndex[rf.me] = rf.LastLogEntry().LogIndex
 	sortedMatchIndex := append([]int(nil), rf.status.matchIndex...) // 简化复制操作
 	sort.Ints(sortedMatchIndex)
-	rf.debug("sortedMatchIndex=%v", sortedMatchIndex)
 	// 计算出中位数的索引N
 	N := sortedMatchIndex[len(sortedMatchIndex)/2]
+	rf.debug("update commitIndex,sortedMatchIndex=%v,N=%v", sortedMatchIndex, N)
 	newCommitIdx := rf.LogIndex2Idx("updateCommitIndex", N)
+
 	//If there exists an N such that N > commitIndex, a majority
 	//of matchIndex[i] ≥ N, and log[N].term == CurrentTerm:set commitIndex = N
 	// todo why 确保新CommitIndex比当前的大，且日志条目属于当前任期
@@ -357,8 +387,8 @@ func (rf *Raft) updateCommitIndex() {
 func (rf *Raft) applyCommittedLogs(newCommitIndex int) {
 	oldCommitIdx := rf.LogIndex2Idx("[applyCommittedLogs] oldCommit", rf.status.commitIndex)
 	newCommitIdx := rf.LogIndex2Idx("[applyCommittedLogs] newCommit", newCommitIndex)
-	rf.debug("commit log, matchIndex=%v N=%v oldCommitIndex=%v oldIdx=%v, newIdx=%v,logs=%v",
-		rf.status.matchIndex, newCommitIndex, rf.status.commitIndex, oldCommitIdx, newCommitIdx, rf.status.Logs)
+	rf.debug("commit log, matchIndex=%v N=%v oldCommitIndex=%v lastCommitLog=%v, newCommitLog=%v,logs=%v",
+		rf.status.matchIndex, newCommitIndex, rf.status.commitIndex, rf.status.Logs[oldCommitIdx], rf.status.Logs[newCommitIdx], rf.status.Logs)
 	rf.status.commitIndex = newCommitIndex
 	// fixme 全改为数组下标时候，比较lastIncludeIndex和lastLogIndex会有问题吗
 	for i := oldCommitIdx + 1; i <= newCommitIdx; i++ {
@@ -377,6 +407,7 @@ func (rf *Raft) leaderSendLogs(server int) {
 	}
 	if rf.status.nextIndex[server] <= rf.status.LastIncludedIndex {
 		// 如果nextIndex小于等于lastIncludedIndex，说明需要发送快照
+		rf.debug("nextIndex(%v) <= lastIncludedIndex(%v),send snapshot to %v", rf.status.nextIndex[server], rf.status.LastIncludedIndex, server)
 		snapshot := rf.persister.ReadSnapshot()
 		go func(term, leaderId, lastIncludedIndex, lastIncludedTerm int, snapshot []byte) {
 			rf.sendInstallSnapshotRequest(server, &installSnapshotRequest{
@@ -395,42 +426,25 @@ func (rf *Raft) leaderSendLogs(server int) {
 		copy(nextIndexCopy, rf.status.nextIndex)
 		//fixme log 数组越界
 		go func(server, term, commitIndex int, logs Logs, nextIndex []int) {
-			/*
-				If last log index ≥ nextIndex for a follower: send
-				AppendEntries RPC with log entries starting at nextIndex
-			*/
+			//If last log index ≥ nextIndex for a follower: send AppendEntries RPC with log entries starting at nextIndex
 			lastLogIndex := logs.LastLogEntry().LogIndex
 			preLog, ok := logs.GetLogEntryByLogIndex(nextIndex[server] - 1)
 			if !ok {
+				rf.debug("get preLog failed, preLogIndex=%v,logs=%v", nextIndex[server]-1, logs)
 				panic("check me")
 			}
 			preLogIdx := rf.LogIndex2Idx("[leaderSendLogs] getPreLog", preLog.LogIndex)
 			// 需要发送新的日志
 			if lastLogIndex >= nextIndex[server] {
-				rf.sendAppendEntriesRequest(server, &appendEntriesRequest{
-					Term:         term,
-					LeaderId:     rf.me,
-					PrevLogIndex: preLog.LogIndex,
-					PrevLogTerm:  preLog.Term,
-					Entries:      logs[preLogIdx+1:],
-					LeaderCommit: commitIndex,
-				})
+				go rf.sendAppendEntriesRequestToFollower(server, term, preLog, logs[preLogIdx+1:], commitIndex)
 				rf.debug("sendAppendEntries to %v,preLogIdx=%v,lastLogIndex=%v,nextIndex=%v,lenOfLog=%v,msgEntries=%v,leaderCommitIndex=%v",
 					server, preLogIdx, lastLogIndex, nextIndex[server], len(logs), logs[preLogIdx+1:], commitIndex)
 			} else {
-				// If there are no new entries to send: send
-				// AppendEntries RPC with log entries starting at nextIndex - 1
+				// If there are no new entries to send: send AppendEntries RPC with log entries starting at nextIndex - 1
 				// 发送心跳
 				rf.debug("send heartbeat to %v,lastLogIndex=%v,nextIndex=%v,lenOfLog=%v",
 					server, lastLogIndex, nextIndex[server], len(logs))
-				rf.sendAppendEntriesRequest(server, &appendEntriesRequest{
-					Term:         term,
-					LeaderId:     rf.me,
-					PrevLogIndex: nextIndex[server] - 1,
-					PrevLogTerm:  logs[nextIndex[server]-1].Term,
-					Entries:      nil,
-					LeaderCommit: commitIndex,
-				})
+				go rf.sendAppendEntriesRequestToFollower(server, term, preLog, nil, commitIndex)
 			}
 		}(server, rf.status.CurrentTerm, rf.status.commitIndex, logsCopy, nextIndexCopy)
 	}
@@ -488,7 +502,8 @@ func (rf *Raft) ProcessApplyQueue() {
 	}
 }
 
-// 周期性快照
+// 1.日志条目数量超过 SnapShotInterval
+// 2.节点重新连接或恢复后需要同步快照
 func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	respChan := make(chan struct{})
 	rf.snapShotChan <- SnapShotInfo{
@@ -536,6 +551,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 		},
 		messagePipeLine: make(chan Message),
 		commandChan:     make(chan CommandInfo),
+		snapShotChan:    make(chan SnapShotInfo),
 	}
 	// (first index is 1)
 	for i := range rf.status.nextIndex {
