@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # os.chdir(os.path.dirname(__file__))
-# python3 ./dstest.py -n 10 -p 128 2A 2B 2C 2D
+# python3 dstest.py -n 10 -p 128 2A 2B 2C 2D
 import itertools
 import math
 import signal
@@ -106,7 +106,7 @@ def run_test(test: str, race: bool, timing: bool):
     if race:
         test_cmd.append("-race")
     if timing:
-        test_cmd = ["time"] + cmd
+        test_cmd = ["time"] + test_cmd
     f, path = tempfile.mkstemp()
     start = time.time()
     proc = subprocess.run(test_cmd, stdout=f, stderr=f)

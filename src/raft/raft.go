@@ -150,19 +150,11 @@ func (rf *Raft) Step() {
 					rf.electionTimer()
 					//If existing log entry has same index and term as snapshot’s last included entry, retain log entries following it and reply
 					entry, ok := rf.status.Logs.GetLogEntryByLogIndex(msg.LastIncludedIndex)
-					//提交索引大于快照的最后包含索引,直接返回true
-					if msg.LastIncludedIndex <= max(rf.status.LastIncludedIndex, rf.status.commitIndex) {
+					//已经包含快照条目，且任期号匹配 或 提交索引大于快照的最后包含索引,直接返回true
+					if (ok && entry.Term == msg.LastIncludedTerm) || msg.LastIncludedIndex <= rf.status.commitIndex {
 						rf.debug("already have snapshot,msg.lastIncIndex=%v,commitIndex=%v,logs=%v",
 							msg.LastIncludedIndex, rf.status.commitIndex, rf.status.Logs)
 						go rf.sendInstallSnapshotReplyToLeader(msg, rf.status.CurrentTerm, true)
-						break
-					}
-					// 如果已经包含快照条目，且任期号匹配，只保留快照后的日志
-					if ok && entry.Term == msg.LastIncludedTerm {
-						rf.debug("already have snapshot,msg.lastIncIndex=%v,commitIndex=%v,logs=%v",
-							msg.LastIncludedIndex, rf.status.commitIndex, rf.status.Logs)
-						rf.status.Logs.TrimFrontLogs(msg.LastIncludedIndex)
-						rf.applySnapshot(msg, rf.status.Logs)
 						break
 					}
 					// 如果没有快照的最后日志，删除所有的日志，只保留快照
