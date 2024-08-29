@@ -173,6 +173,8 @@ def run_tests(
         print(f"[yellow] Verbosity level set to {verbose}[/yellow]")
         os.environ['VERBOSE'] = str(verbose)
 
+    saved_logs = {}
+
     while True:
 
         total = iterations * len(tests)
@@ -239,13 +241,15 @@ def run_tests(
                             print(f"Failed test {test} - {dest}")
                             task_progress.update(tasks[test], description=f"[red]{test}[/red]")
                             results[test]['failed'].add(1)
+
                         else:
                             if results[test]['completed'].n == iterations and results[test]['failed'].n == 0:
                                 task_progress.update(tasks[test], description=f"[green]{test}[/green]")
 
-                        if rc != 0 or archive:
+                        if (rc != 0 and test not in saved_logs) or archive:
                             output.mkdir(exist_ok=True, parents=True)
                             shutil.copy(path, dest)
+                            saved_logs[test] = True
 
                         if timing:
                             line = last_line(path)
