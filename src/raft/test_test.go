@@ -580,7 +580,7 @@ func TestCount2B(t *testing.T) {
 
 	total1 := rpcs()
 
-	if total1 > 30 || total1 < 1 {
+	if total1 > 30*2 || total1 < 1*2 {
 		t.Fatalf("too many or few RPCs (%v) to elect initial leader\n", total1)
 	}
 

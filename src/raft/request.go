@@ -22,12 +22,12 @@ type requestVoteReply struct {
 
 // 心跳: AppendEntries RPCs that carry no log entries is heartbeat
 type appendEntriesRequest struct {
-	Term         int        // leader的任期
-	LeaderId     int        // leader自身的ID
-	PrevLogIndex int        // 前一个日志的索引 (用于匹配日志位置是否是合适的，初始化rf.nextIndex[i] - 1)
-	PrevLogTerm  int        // 前一个日志所属的任期 (用于匹配日志的任期是否是合适的是，是否有冲突)
-	Entries      []LogEntry // 将要存储的日志条目列表 (为空时代表heartbeat, 有时候为了效率会发送超过一条)
-	LeaderCommit int        // Leader已提交的日志条目索引 (最后一个被大多数机器都复制的日志Index)
+	Term         int      // leader的任期
+	LeaderId     int      // leader自身的ID
+	PrevLogIndex int      // 前一个日志的索引 (用于匹配日志位置是否是合适的，初始化rf.nextIndex[i] - 1)
+	PrevLogTerm  int      // 前一个日志所属的任期 (用于匹配日志的任期是否是合适的是，是否有冲突)
+	Entries      [][]byte // 将要存储的日志条目列表 (为空时代表heartbeat, 有时候为了效率会发送超过一条)
+	LeaderCommit int      // Leader已提交的日志条目索引 (最后一个被大多数机器都复制的日志Index)
 }
 
 type appendEntriesReply struct {
@@ -187,7 +187,7 @@ func (rf *Raft) sendAppendEntriesReplyToLeader(success bool, term int, msg *appe
 	rf.sendAppendEntriesReply(msg.LeaderId, reply)
 }
 
-func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogEntry, entries []LogEntry, leaderCommit int) {
+func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogEntry, entries [][]byte, leaderCommit int) {
 	rf.sendAppendEntriesRequest(server, &appendEntriesRequest{
 		term,
 		rf.me,
@@ -196,11 +196,6 @@ func (rf *Raft) sendAppendEntriesRequestToFollower(server, term int, preLog LogE
 		entries,
 		leaderCommit,
 	})
-	// fixme 3
-	if len(entries) > 0 && preLog.LogIndex+1 != entries[0].LogIndex {
-		rf.debug("send entries err, preLog=%v, msg=%v", preLog, entries)
-		panic("send entries err")
-	}
 }
 
 func (rf *Raft) sendSnapShotRequestToFollower(server int) {

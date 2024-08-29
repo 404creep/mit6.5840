@@ -185,7 +185,14 @@ func (rf *Raft) Step() {
 						go rf.sendAppendEntriesReplyToLeader(false, rf.status.CurrentTerm, msg, map[string]int{})
 						break
 					}
-
+					entries := make([]LogEntry, 0)
+					for _, entryBytes := range msg.Entries {
+						entry, ok := BytesToLogEntry(entryBytes)
+						if !ok {
+							log.Fatalf("BytesToLogEntry failed")
+						}
+						entries = append(entries, entry)
+					}
 					// rf.term == msg.term
 					// todo why重置并持久化状态
 					if rf.status.state == Candidate {
@@ -229,14 +236,14 @@ func (rf *Raft) Step() {
 
 					if msg.Entries != nil {
 						// 如果已经有最后的日志且term相等，说明msg.Entries是重复的，过期reply,直接返回成功
-						lastAppendEntry := msg.Entries[len(msg.Entries)-1]
+						lastAppendEntry := entries[len(entries)-1]
 						preLogIdx, _ := rf.LogIndex2Idx("get follower preLogIdx", preLogEntry.LogIndex)
 						if lastEntry, ok := rf.status.Logs.GetLogEntryByLogIndex(lastAppendEntry.LogIndex); !ok || lastEntry.Term != lastAppendEntry.Term {
 							// 否则，直接替换rf.Logs[preLogIndex+1:]为msg.Entries
-							rf.status.Logs = append(rf.status.Logs[:preLogIdx+1], msg.Entries...)
+							rf.status.Logs = append(rf.status.Logs[:preLogIdx+1], entries...)
 						}
 						rf.debug("rf.preLog is %v, msg.preLogIndex is %v,matched, rf.newLog is %v,reqLogLen(%v), msgEntries=%v",
-							preLogEntry, msg.PrevLogIndex, rf.status.Logs, len(msg.Entries), msg.Entries)
+							preLogEntry, msg.PrevLogIndex, rf.status.Logs, len(entries), entries)
 					}
 					rf.persist(nil)
 					//执行新的已经commit日志
@@ -368,12 +375,11 @@ func (rf *Raft) applyCommittedLogs(newCommitIndex int) {
 	rf.status.commitIndex = newCommitIndex
 	// todo 全改为数组下标时候，比较lastIncludeIndex和lastLogIndex会有问题吗
 	for i := lastCommitIdx + 1; i <= newCommitIdx; i++ {
-		msg := ApplyMsg{
+		rf.applyQueue.Enqueue(ApplyMsg{
 			CommandValid: true,
 			Command:      rf.status.Logs[i].Command,
 			CommandIndex: rf.status.Logs[i].LogIndex,
-		}
-		rf.applyQueue.Enqueue(msg)
+		})
 	}
 }
 
@@ -401,7 +407,7 @@ func (rf *Raft) leaderSendLogs(server int) {
 			}
 			// 需要发送新的日志
 			if lastLogIndex >= nextIndex[server] {
-				entries, ok := logs.GetLogEntriesFromIndex(preLog.LogIndex + 1)
+				entries, ok := logs.GetLogEntriesBytesFromIndex(preLog.LogIndex + 1)
 				if !ok {
 					rf.debug("get logs failed, preLogIndex=%v,lastIncIndex=%v,logs=%v", nextIndex[server]-1, rf.status.LastIncludedIndex, logs)
 					panic("get msgEntries failed")
@@ -426,13 +432,14 @@ func (rf *Raft) applySnapshot(msg *installSnapshotRequest, newLogs []LogEntry) {
 	rf.status.LastIncludedTerm = msg.LastIncludedTerm
 	rf.status.commitIndex = msg.LastIncludedIndex
 	rf.persist(msg.Snapshot)
-	rf.applyChan <- ApplyMsg{
+	rf.applyQueue.Clear()
+	rf.applyQueue.Enqueue(ApplyMsg{
 		CommandValid:  false,
 		SnapshotValid: true,
 		Snapshot:      msg.Snapshot,
 		SnapshotTerm:  msg.LastIncludedTerm,
 		SnapshotIndex: msg.LastIncludedIndex,
-	}
+	})
 	go rf.sendInstallSnapshotReplyToLeader(msg, rf.status.CurrentTerm, true)
 }
 

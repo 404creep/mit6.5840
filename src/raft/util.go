@@ -9,7 +9,7 @@ import (
 )
 
 // Debugging
-const Debug = false
+const Debug = true
 
 // raft state
 type State int
@@ -50,12 +50,17 @@ func NewUnboundedQueue() *UnboundedQueue {
 	return uq
 }
 
-// Enqueue 将一个元素添加到队列中
+// 将一个元素添加到队列中
 func (uq *UnboundedQueue) Enqueue(item interface{}) {
 	uq.mu.Lock()
 	uq.queue = append(uq.queue, item)
 	uq.mu.Unlock()
 	uq.notEmpty.Broadcast() // 通知所有等待队列非空的 goroutine
+}
+func (uq *UnboundedQueue) Clear() {
+	uq.mu.Lock()
+	defer uq.mu.Unlock()
+	uq.queue = nil
 }
 
 // DequeueAll 返回队列中的所有元素，并清空队列
