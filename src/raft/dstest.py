@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# os.chdir(os.path.dirname(__file__))
-# python3 dstest.py -n 10 -p 128 2A 2B 2C 2D
+
 import itertools
 import math
 import signal
@@ -35,6 +34,19 @@ from rich.traceback import install
 
 install(show_locals=True)
 
+test_case_mp = {
+    "2A": ['TestInitialElection2A', 'TestReElection2A', 'TestManyElections2A'],
+    "2B": ['TestBasicAgree2B', 'TestRPCBytes2B', 'TestFollowerFailure2B',
+           'TestLeaderFailure2B', 'TestFailAgree2B', 'TestFailNoAgree2B',
+           'TestConcurrentStarts2B', 'TestRejoin2B', 'TestBackup2B',
+           'TestCount2B'],
+    "2C": ['TestPersist12C', 'TestPersist22C', 'TestPersist32C',
+           'TestFigure82C', 'TestUnreliableAgree2C', 'TestFigure8Unreliable2C',
+           'TestReliableChurn2C', 'TestUnreliableChurn2C'],
+    "2D": ['TestSnapshotBasic2D', 'TestSnapshotInstall2D', 'TestSnapshotInstallUnreliable2D',
+           'TestSnapshotInstallCrash2D', 'TestSnapshotInstallUnCrash2D',
+           'TestSnapshotAllCrash2D', 'TestSnapshotInit2D']
+}
 
 @dataclass
 class StatsMeter:
@@ -136,9 +148,19 @@ def run_tests(
     race: bool             = typer.Option(False,  '--race/--no-race',  '-r/-R', help='Run with race checker'),
     loop: bool             = typer.Option(False,  '--loop',            '-l',    help='Run continuously'),
     growth: int            = typer.Option(10,     '--growth',          '-g',    help='Growth ratio of iterations when using --loop'),
-    timing: bool           = typer.Option(False,   '--timing',          '-t',    help='Report timing, only works on macOS'),
-    # fmt: on
+    timing: bool           = typer.Option(False,   '--timing',         '-t',    help='Report timing, only works on macOS'),
+    expand_test: bool      = typer.Option(False,  '--expand_test',     '-e',    help='Expand test into individual test cases'),# fmt: on
 ):
+    # 扩展测试用例
+    if expand_test:
+        expanded_tests = []
+        for test in tests:
+            if test in test_case_mp:
+                expanded_tests.extend(test_case_mp[test])
+            else:
+                expanded_tests.append(test)
+        tests = expanded_tests
+
 
     if output is None:
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
