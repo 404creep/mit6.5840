@@ -407,17 +407,16 @@ func (rf *Raft) leaderSendLogs(server int) {
 			}
 			// 需要发送新的日志
 			if lastLogIndex >= nextIndex[server] {
-				entries, ok := logs.GetLogEntriesBytesFromIndex(preLog.LogIndex + 1)
+				logBytes, logEntries, ok := logs.GetLogEntriesFromIndex(preLog.LogIndex + 1)
 				if !ok {
 					rf.debug("get logs failed, preLogIndex=%v,lastIncIndex=%v,logs=%v", nextIndex[server]-1, rf.status.LastIncludedIndex, logs)
 					panic("get msgEntries failed")
 				}
-				go rf.sendAppendEntriesRequestToFollower(server, term, preLog, entries, commitIndex)
+				go rf.sendAppendEntriesRequestToFollower(server, term, preLog, logBytes, commitIndex)
 				rf.debug("sendAppendEntries to %v,preLogIndex=%v,rf.Logs(%v),msgEntries=%v,leaderCommitIndex=%v",
-					server, preLog.LogIndex, logs, entries, commitIndex)
+					server, preLog.LogIndex, logs, logEntries, commitIndex)
 			} else {
-				// If there are no new entries to send: send AppendEntries RPC with log entries starting at nextIndex - 1
-				// 发送心跳
+				// 没有新的日志，发送心跳
 				rf.debug("send heartbeat to %v,nextIndex=%v,rf.Logs(%v)", server, nextIndex[server], logs)
 				go rf.sendAppendEntriesRequestToFollower(server, term, preLog, nil, commitIndex)
 			}

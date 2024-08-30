@@ -44,19 +44,21 @@ func (logs *Logs) GetLogEntryByLogIndex(logIndex int) (LogEntry, bool) {
 	}
 	return (*logs)[idx], true
 }
-func (logs *Logs) GetLogEntriesBytesFromIndex(logIndex int) ([][]byte, bool) {
+func (logs *Logs) GetLogEntriesFromIndex(logIndex int) ([][]byte, []LogEntry, bool) {
 	// 计算实际的切片索引
 	idx := logIndex - (*logs)[0].LogIndex
 	if idx < 0 || idx >= len(*logs) {
 		// 如果 logIndex 无效，返回空切片和 false
-		return nil, false
+		return nil, nil, false
 	}
-	var result [][]byte
+	var logBytes [][]byte
+	var logEntries []LogEntry
 	// 将从 idx 开始的所有日志条目转换为字节数组
 	for _, logEntry := range (*logs)[idx:] {
-		result = append(result, logEntry.ToBytes())
+		logEntries = append(logEntries, logEntry)
+		logBytes = append(logBytes, logEntry.ToBytes())
 	}
-	return result, true
+	return logBytes, logEntries, true
 }
 
 // 裁剪日志，保留从 logIndex 对应的日志开始的部分
