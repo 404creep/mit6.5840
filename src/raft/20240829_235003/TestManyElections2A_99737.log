@@ -1,0 +1,6 @@
+Test (2A): multiple elections ...
+--- FAIL: TestManyElections2A (5.07s)
+    config.go:454: expected one leader, got none
+FAIL
+exit status 1
+FAIL	6.5840/raft	6.187s

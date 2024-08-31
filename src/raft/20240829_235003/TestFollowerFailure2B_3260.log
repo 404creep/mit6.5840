@@ -1,0 +1,153 @@
+Test (2B): test progressive failure of followers ...
+2024/08/30 00:24:34 server:0(Follower term=0): timeout,being candidate,logs=[{0 0 <nil>}]
+2024/08/30 00:24:34 server:1(Follower term=0): timeout,being candidate,logs=[{0 0 <nil>}]
+2024/08/30 00:24:34 server:1(Candidate term=1): received RequestVoteRequest from 0, remote lastLog (index=0, term=0), remote term=1
+2024/08/30 00:24:34 server:1(Candidate term=1): reject vote,reqTerm=1,logs=[{0 0 <nil>}],voteFor=1
+2024/08/30 00:24:34 server:2(Follower term=0): timeout,being candidate,logs=[{0 0 <nil>}]
+2024/08/30 00:24:34 server:2(Candidate term=1): received RequestVoteRequest from 0, remote lastLog (index=0, term=0), remote term=1
+2024/08/30 00:24:34 server:2(Candidate term=1): reject vote,reqTerm=1,logs=[{0 0 <nil>}],voteFor=2
+2024/08/30 00:24:34 server:0(Candidate term=1): received RequestVoteRequest from 1, remote lastLog (index=0, term=0), remote term=1
+2024/08/30 00:24:34 server:0(Candidate term=1): reject vote,reqTerm=1,logs=[{0 0 <nil>}],voteFor=0
+2024/08/30 00:24:34 server:0(Candidate term=1): received RequestVoteRequest from 2, remote lastLog (index=0, term=0), remote term=1
+2024/08/30 00:24:34 server:0(Candidate term=1): reject vote,reqTerm=1,logs=[{0 0 <nil>}],voteFor=0
+2024/08/30 00:24:34 server:1(Candidate term=1): received RequestVoteRequest from 2, remote lastLog (index=0, term=0), remote term=1
+2024/08/30 00:24:34 server:1(Candidate term=1): reject vote,reqTerm=1,logs=[{0 0 <nil>}],voteFor=1
+2024/08/30 00:24:34 server:2(Candidate term=1): received RequestVoteRequest from 1, remote lastLog (index=0, term=0), remote term=1
+2024/08/30 00:24:34 server:2(Candidate term=1): reject vote,reqTerm=1,logs=[{0 0 <nil>}],voteFor=2
+2024/08/30 00:24:35 server:2(Candidate term=1): timeout,retrying,logs=[{0 0 <nil>}]
+2024/08/30 00:24:35 server:0(Candidate term=1): found self term < remote term, turning into follower of term 2
+2024/08/30 00:24:35 server:0(Follower term=2): received RequestVoteRequest from 2, remote lastLog (index=0, term=0), remote term=2
+2024/08/30 00:24:35 server:1(Candidate term=1): found self term < remote term, turning into follower of term 2
+2024/08/30 00:24:35 server:1(Follower term=2): received RequestVoteRequest from 2, remote lastLog (index=0, term=0), remote term=2
+2024/08/30 00:24:35 server:0(Follower term=2): vote for 2,reqTerm=2,logs=[{0 0 <nil>}]
+2024/08/30 00:24:35 server:1(Follower term=2): vote for 2,reqTerm=2,logs=[{0 0 <nil>}]
+2024/08/30 00:24:35 server:2(Candidate term=2): received 2 votes,be leader,peerNum:3
+2024/08/30 00:24:35 server:2(Leader term=2): be leader, logs=[{0 0 <nil>}], nextIndex=[1 1 1], matchIndex=[0 0 0]
+2024/08/30 00:24:35 server:2(Leader term=2): timeout,send heartbeat,logs=[{0 0 <nil>}]
+2024/08/30 00:24:35 server:2(Leader term=2): send heartbeat to 1,nextIndex=1,rf.Logs([{0 0 <nil>}])
+2024/08/30 00:24:35 server:2(Leader term=2): send heartbeat to 0,nextIndex=1,rf.Logs([{0 0 <nil>}])
+2024/08/30 00:24:35 server:1(Follower term=2): receive heartbeat from 2,logs=[{0 0 <nil>}]
+2024/08/30 00:24:35 server:2(Leader term=2): update commitIndex,sortedMatchIndex=[0 0 0],N=0
+2024/08/30 00:24:35 server:0(Follower term=2): receive heartbeat from 2,logs=[{0 0 <nil>}]
+2024/08/30 00:24:35 server:2(Leader term=2): update commitIndex,sortedMatchIndex=[0 0 0],N=0
+2024/08/30 00:24:35 server:2(Leader term=2): received command(101), index would be 1, now logs is [{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:35 server:2(Leader term=2): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:35 server:2(Leader term=2): sendAppendEntries to 1,preLogIndex=0,rf.Logs([{0 0 <nil>} {2 1 101}]),msgEntries=[[56 255 129 3 1 1 8 76 111 103 69 110 116 114 121 1 255 130 0 1 3 1 4 84 101 114 109 1 4 0 1 8 76 111 103 73 110 100 101 120 1 4 0 1 7 67 111 109 109 97 110 100 1 16 0 0 0 17 255 130 1 4 1 2 1 3 105 110 116 4 3 0 255 202 0]],leaderCommitIndex=0
+2024/08/30 00:24:35 server:2(Leader term=2): sendAppendEntries to 0,preLogIndex=0,rf.Logs([{0 0 <nil>} {2 1 101}]),msgEntries=[[56 255 129 3 1 1 8 76 111 103 69 110 116 114 121 1 255 130 0 1 3 1 4 84 101 114 109 1 4 0 1 8 76 111 103 73 110 100 101 120 1 4 0 1 7 67 111 109 109 97 110 100 1 16 0 0 0 17 255 130 1 4 1 2 1 3 105 110 116 4 3 0 255 202 0]],leaderCommitIndex=0
+2024/08/30 00:24:35 server:0(Follower term=2): receive appendEntriesRequest from 2,remoteTerm=2,len(entries)=1,preLog(index=0 term=0),selfLogs = [{0 0 <nil>}]
+2024/08/30 00:24:35 server:0(Follower term=2): rf.preLog is {0 0 <nil>}, msg.preLogIndex is 0,matched, rf.newLog is [{0 0 <nil>} {2 1 101}],reqLogLen(1), msgEntries=[{2 1 101}]
+2024/08/30 00:24:35 server:1(Follower term=2): receive appendEntriesRequest from 2,remoteTerm=2,len(entries)=1,preLog(index=0 term=0),selfLogs = [{0 0 <nil>}]
+2024/08/30 00:24:35 server:1(Follower term=2): rf.preLog is {0 0 <nil>}, msg.preLogIndex is 0,matched, rf.newLog is [{0 0 <nil>} {2 1 101}],reqLogLen(1), msgEntries=[{2 1 101}]
+2024/08/30 00:24:35 server:2(Leader term=2): receiveAppendEntriesReply from 0, done=true,reqPreLogIndex=0,reqLogLen=1
+2024/08/30 00:24:35 server:2(Leader term=2): appendEntry 0 done,nextIndex=[2 1 1],preLogIndex=0,reqLogLen=1
+2024/08/30 00:24:35 server:2(Leader term=2): update commitIndex,sortedMatchIndex=[0 1 1],N=1
+2024/08/30 00:24:35 server:2(Leader term=2): commit log, matchIndex=[1 0 1] N=1 oldCommitIndex=0 lastCommitLog={0 0 <nil>}, newCommitLog={2 1 101},logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:35 server:2(Leader term=2): receiveAppendEntriesReply from 1, done=true,reqPreLogIndex=0,reqLogLen=1
+2024/08/30 00:24:35 server:2(Leader term=2): appendEntry 1 done,nextIndex=[2 2 1],preLogIndex=0,reqLogLen=1
+2024/08/30 00:24:35 server:2(Leader term=2): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:35 [async thread] 2 send to applyCh {true 101 1 false [] 0 0}
+2024/08/30 00:24:35 server:2(Leader term=2): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:2(Leader term=2): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:35 server:0(Follower term=2): timeout,being candidate,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:2(Leader term=2): send heartbeat to 0,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:35 server:1(Follower term=2): timeout,being candidate,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:2(Leader term=2): found self term < remote term, turning into follower of term 3
+2024/08/30 00:24:36 server:2(Follower term=3): received RequestVoteRequest from 0, remote lastLog (index=1, term=2), remote term=3
+2024/08/30 00:24:36 server:2(Follower term=3): vote for 0,reqTerm=3,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Candidate term=3): received RequestVoteRequest from 0, remote lastLog (index=1, term=2), remote term=3
+2024/08/30 00:24:36 server:1(Candidate term=3): reject vote,reqTerm=3,logs=[{0 0 <nil>} {2 1 101}],voteFor=1
+2024/08/30 00:24:36 server:2(Follower term=3): received RequestVoteRequest from 1, remote lastLog (index=1, term=2), remote term=3
+2024/08/30 00:24:36 server:2(Follower term=3): reject vote,reqTerm=3,logs=[{0 0 <nil>} {2 1 101}],voteFor=0
+2024/08/30 00:24:36 server:0(Candidate term=3): received RequestVoteRequest from 1, remote lastLog (index=1, term=2), remote term=3
+2024/08/30 00:24:36 server:0(Candidate term=3): reject vote,reqTerm=3,logs=[{0 0 <nil>} {2 1 101}],voteFor=0
+2024/08/30 00:24:36 server:0(Candidate term=3): received 2 votes,be leader,peerNum:3
+2024/08/30 00:24:36 server:0(Leader term=3): be leader, logs=[{0 0 <nil>} {2 1 101}], nextIndex=[2 2 2], matchIndex=[0 0 0]
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[0 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:36 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:36 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): timeout,send heartbeat,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 2,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:0(Leader term=3): send heartbeat to 1,nextIndex=2,rf.Logs([{0 0 <nil>} {2 1 101}])
+2024/08/30 00:24:37 server:2(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:1(Follower term=3): receive heartbeat from 0,logs=[{0 0 <nil>} {2 1 101}]
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+2024/08/30 00:24:37 server:0(Leader term=3): update commitIndex,sortedMatchIndex=[1 1 1],N=1
+--- FAIL: TestFollowerFailure2B (2.97s)
+    config.go:594: one(101) failed to reach agreement
+FAIL
+exit status 1
+FAIL	6.5840/raft	4.105s
