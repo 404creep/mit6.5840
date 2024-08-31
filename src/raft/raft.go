@@ -273,7 +273,6 @@ func (rf *Raft) Step() {
 						if newNextLogIndex > rf.LastLogEntry().LogIndex+1 {
 							rf.debug("get reply from %v,nextIndex(%v) is too large, preIndex(%v),lastIncIndex(%v),reqLogLen(%v), leaderLog is%v",
 								msg.Id, newNextLogIndex, msg.ReqPrevLogIndex, rf.status.LastIncludedIndex, msg.ReqLogLen, rf.status.Logs)
-							panic("check me")
 						}
 						rf.status.nextIndex[msg.Id] = max(rf.status.nextIndex[msg.Id], newNextLogIndex)
 						rf.status.matchIndex[msg.Id] = rf.status.nextIndex[msg.Id] - 1

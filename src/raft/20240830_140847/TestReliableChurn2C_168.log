@@ -1,0 +1,3149 @@
+Test (2C): churn ...
+labgob warning: Decoding into a non-default variable/field VotedFor may not work
+panic: test timed out after 10m0s
+running tests:
+	TestReliableChurn2C (10m0s)
+
+goroutine 330790 [running]:
+testing.(*M).startAlarm.func1()
+	E:/go1.21/src/testing/testing.go:2259 +0x3b9
+created by time.goFunc
+	E:/go1.21/src/time/sleep.go:176 +0x2d
+
+goroutine 1 [chan receive, 9 minutes]:
+testing.(*T).Run(0xc000041a00, {0xf7ef3a?, 0xd96eed?}, 0xf8eca0)
+	E:/go1.21/src/testing/testing.go:1649 +0x3c8
+testing.runTests.func1(0x11407c0?)
+	E:/go1.21/src/testing/testing.go:2054 +0x3e
+testing.tRunner(0xc000041a00, 0xc00007bc48)
+	E:/go1.21/src/testing/testing.go:1595 +0xff
+testing.runTests(0xc00005e140?, {0x113c1a0, 0x1c, 0x1c}, {0xd37425?, 0xc00007bd08?, 0x113ffa0?})
+	E:/go1.21/src/testing/testing.go:2052 +0x445
+testing.(*M).Run(0xc00005e140)
+	E:/go1.21/src/testing/testing.go:1925 +0x636
+main.main()
+	_testmain.go:101 +0x19c
+
+goroutine 6 [chan receive, 9 minutes]:
+6.5840/raft.internalChurn(0xc000041ba0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:1054 +0x725
+6.5840/raft.TestReliableChurn2C(0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:1091 +0x15
+testing.tRunner(0xc000041ba0, 0xf8eca0)
+	E:/go1.21/src/testing/testing.go:1595 +0xff
+created by testing.(*T).Run in goroutine 1
+	E:/go1.21/src/testing/testing.go:1648 +0x3ad
+
+goroutine 7 [select]:
+6.5840/labrpc.MakeNetwork.func1()
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:153 +0xd8
+created by 6.5840/labrpc.MakeNetwork in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:151 +0x196
+
+goroutine 8 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a000)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 9 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc0000595d0, 0x0)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0x0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc00001ccf0)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a000)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 10 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x0, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 11 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a0f0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 12 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc0000599d0, 0x16f)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc00001d2f0)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a0f0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 13 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x1, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 14 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a1e0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 15 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc000059b50, 0x16e)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc00001d590)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a1e0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 16 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x2, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 18 [runnable]:
+6.5840/raft.(*Raft).Step(0xc00013a2d0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 19 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc000059cd0, 0x134)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc00001d830)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a2d0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 20 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x3, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 328716 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001aaa40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000e233e0?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328715
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 22 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc000059e50, 0x44)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc00001dad0)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a3c0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 23 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x4, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 24 [chan send, 9 minutes]:
+6.5840/raft.(*Raft).Start(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:564
+6.5840/raft.internalChurn.func1(0x0, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:975 +0x374
+created by 6.5840/raft.internalChurn in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:1010 +0x157
+
+goroutine 25 [chan send, 9 minutes]:
+6.5840/raft.internalChurn.func1.1()
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:963 +0x1b
+6.5840/raft.internalChurn.func1(0x1, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:1004 +0x210
+created by 6.5840/raft.internalChurn in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:1010 +0x157
+
+goroutine 26 [chan send, 9 minutes]:
+6.5840/raft.(*Raft).Start(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:564
+6.5840/raft.internalChurn.func1(0x2, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:975 +0x374
+created by 6.5840/raft.internalChurn in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/test_test.go:1010 +0x157
+
+goroutine 328479 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc0002a4420?}, {0xf27d40, 0xc00036c060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x60e, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 13132 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a690)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 329995 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x615, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 16403 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a870)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 330525 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000384040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x612, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328486 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x619, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 12411 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x2, 0xffffffffffffff01?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 330675 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc000474600?}, {0xf27bc0, 0xc00034e180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xf0d654?, 0x3?, {0xf2f740?, 0xc000276a00?}}, {0xc00034c000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330710
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329946 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc00005d5c0?}, {0xf27d40, 0xc0001d0000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x603, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330586 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000088780?}, {0xf27bc0, 0xc00022b480}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00013a870?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc000306000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330548
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 13133 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc000245510, 0xa6)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc0001d9920)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a690)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 328991 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xc0009cd320?}, {0xf27d40, 0xc00075aae0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x5fe, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329834 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xc000882720?}, {0xf27d40, 0xc0001d0740}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x620, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327910 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x616, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330729 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00061b980}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000760000?, 0x749?, {0x0?, 0x0?}}, {0xc0005da000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330723
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329835 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xc00005d800?}, {0xf27d40, 0xc0001d0760}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x620, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328703 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000475500?}, {0xf27bc0, 0xc0003925c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00074ee40?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000394000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328713
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330576 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0x0?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x618, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 15492 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x0, 0xc000ed4800?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 330495 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0000d9cc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000556800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000424300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330494
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 19355 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc0006bc8d0, 0x1)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc000680a50)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a960)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 329377 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x61e, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330719 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xc0002a43c0?}, {0xf27d40, 0xc0003d4040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x624, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330783 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00036d1a0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x613, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330607 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc000059a80}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xf0d654?, 0x4?, {0x0?, 0x0?}}, {0xc00060e000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330544
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330235 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0001d0000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x622, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329007 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc0009cd140?}, {0xf27bc0, 0xc0008160c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00083b800?, 0x749?, {0x0?, 0x0?}}, {0xc0007ac000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328999
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329825 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c6000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x602, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329064 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00077dec0?}, {0xf27bc0, 0xc0003897c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xf0d654?, 0x3?, {0x0?, 0x0?}}, {0xc000236000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329076
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329429 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc00036c040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x600, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330357 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000aacc20}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x605, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329269 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00017bb00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000475b00?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000262000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329208
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330694 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0005628c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc00043a000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330708
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329738 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000059ec0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc0000a2000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329781
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328911 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0002c6020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x60a, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330473 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0000bf3c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc00079a000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330491
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329082 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0002c0340}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000b80800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc00035c300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329072
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329528 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000251840}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc00013a960?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000005200, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329527
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330712 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xc00077c480?}, {0xf27bc0, 0xc000245f00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc0001d2000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330711
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328574 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00051c900}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x5fc, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329097 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60b, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330102 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc000e0c040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00074e900?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000150000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330212
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330281 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000337080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000338000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330200
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329431 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xc0009cc840?}, {0xf27d40, 0xc00036c080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x600, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330140 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc000443b40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc0003f1800?, 0x749?, {0x0?, 0x0?}}, {0xc00036e000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330061
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328697 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0003c2940}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0006f1800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000384300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328664
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329122 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0002fd8c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xf0d654?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329073
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328373 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xc0009cc5a0?}, {0xf27d40, 0xc0001d0020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x5fb, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 15491 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc00050abd0, 0x1a)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc000825050)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a780)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 329817 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0000101a0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x614, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328089 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0003ee280}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00074efc0?, 0x6b?, {0x0?, 0x0?}}, {0xc0003a8000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328024
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329426 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00051efc0?}, {0xf27bc0, 0xc000253080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc0002c4800?, 0x749?, {0x0?, 0x0?}}, {0xc000222000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329340
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330421 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0680}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x617, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329948 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xc000089440?}, {0xf27d40, 0xc00036c020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x603, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329532 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0005fdc00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0006f3000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000005800, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329526
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 327800 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00051f800?}, {0xf27bc0, 0xc000289e00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc0005f1800?, 0x749?, {0x0?, 0x0?}}, {0xc00023e000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327794
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330033 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000199500?}, {0xf27bc0, 0xc0002e2340}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xf0d654?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc0002e0000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330046
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328917 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xc00005cd20?}, {0xf27d40, 0xc00036c060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x61b, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330237 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xc000088b40?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x622, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 16404 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc0004fc0d0, 0x67)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc000824030)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a870)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 328260 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000438fc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000676800?, 0x749?, {0x0?, 0x0?}}, {0xc0003b4000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328174
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330727 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0004fcb00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000e22540?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330726
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329993 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc0002a47e0?}, {0xf27d40, 0xc0001d0020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x615, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330387 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc0002a5440?}, {0xf27bc0, 0xc000519f40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc00013a960?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc000978f00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330435
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329989 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0003b9640}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc0003f1000?, 0x749?, {0x0?, 0x0?}}, {0xc000392000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329903
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330553 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00051d700}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000880000?, 0x749?, {0x0?, 0x0?}}, {0xc000490000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330547
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329295 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc0009ccde0?}, {0xf27bc0, 0xc000094400}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00013a690?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc000284000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329304
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329223 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0003d4020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x5ff, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 19354 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a960)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 329786 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0004fc9c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0002c5000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329782
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 13134 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x3, 0xc00068cc00?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 328944 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0004fdd40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0002c5000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328940
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330202 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000094040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc00077cb40?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330201
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 12409 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a5a0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 328845 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000413f00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00064a800?, 0x749?, {0x0?, 0x0?}}, {0xc0003ca000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328850
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328539 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00042f080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000904000?, 0x749?, {0x0?, 0x0?}}, {0xc0003c8000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328369
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330400 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0001d0a20}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x623, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329521 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0003d47c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x60d, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329157 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001d4680}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00074e0c0?, 0x63?, {0xf2f740?, 0xc000276a00?}}, {0xc0000f0000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329176
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329384 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc000474f00?}, {0xf27bc0, 0xc0002da340}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xf0d654?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc0002d4000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329342
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330138 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0001d4380}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00051e900?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330062
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329881 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00074e600?}, {0xf27bc0, 0xc0003b1a00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc000614000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329858
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328480 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00036c080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60e, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330595 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0xc000883e60?}, {0xf27d40, 0xc00036c020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x618, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328843 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000882780?}, {0xf27bc0, 0xc000095040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00013a960?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc0001cc000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328851
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330369 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc0001cf858?}, {0xf27bc0, 0xc00035d900}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000b81800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000978c00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330361
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328254 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0001d0440}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x618, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329954 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c6020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x60f, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328428 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xc000474fc0?}, {0xf27bc0, 0xc0003ac080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000458000?, 0x7bba?, {0xf2f740?, 0xc000276a00?}}, {0xc0005ba300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328427
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329718 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc000475bc0?}, {0xf27bc0, 0xc000095440}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc00043e000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329576
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328071 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc00036c800}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x617, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328742 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x60f, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 4132 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a4b0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 329344 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xc00051efc0?}, {0xf27bc0, 0xc0001aa580}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xf0d654?, 0x3?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329343
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329458 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0002db980}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc00012e160?, 0xb4?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329441
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329987 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001d4380}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc0007de000?, 0x7b00?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329986
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329586 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xf27c00?}, {0xf27d40, 0xc0003d47e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60d, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330577 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0003d4000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x618, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329604 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0002c6040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x613, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328261 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0000114e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x607, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 15490 [select]:
+6.5840/raft.(*Raft).Step(0xc00013a780)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:20 +0x165
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:555 +0x396
+
+goroutine 329460 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001f5bc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00041e000?, 0x749?, {0x0?, 0x0?}}, {0xc0001e4000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329438
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330399 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0a00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x623, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329374 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0003d5e20}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x61e, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328985 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x610, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328488 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x619, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329212 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc0009ccd80?}, {0xf27bc0, 0xc00062aa40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc0002c4000?, 0x749?, {0x0?, 0x0?}}, {0xc00053c000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329206
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 3316 [chan receive, 9 minutes]:
+6.5840/labrpc.(*Network).processReq.func2()
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:258 +0x19
+created by 6.5840/labrpc.(*Network).processReq in goroutine 3199
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:257 +0x4dc
+
+goroutine 329171 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0xf27c00?}, {0xf27d40, 0xc0001d00c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x61c, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328856 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001d4900}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000881800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328852
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330720 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0xc00005ce40?}, {0xf27d40, 0xc0003d4020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x624, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330556 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0003d4020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x606, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330179 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0000101a0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x604, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328572 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0001ce2a0?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x5fc, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 3190 [chan send, 9 minutes]:
+6.5840/raft.(*Raft).AppendEntries(0x0?, 0x0?, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:80 +0x47
+reflect.Value.call({0xc00005a500?, 0xc00004a7f8?, 0xc0003d1b18?}, {0xf7acd0, 0x4}, {0xc0003d1c70, 0x3, 0xc0003d1b48?})
+	E:/go1.21/src/reflect/value.go:596 +0xce7
+reflect.Value.Call({0xc00005a500?, 0xc00004a7f8?, 0xc00052ca90?}, {0xc0003d1c70?, 0xc000357ba8?, 0xef45fd?})
+	E:/go1.21/src/reflect/value.go:380 +0xb9
+6.5840/labrpc.(*Service).dispatch(0xc000059e80, {0xf7e931, 0xd}, {{0xf2f5c0, 0xc000021970}, {0xf7e92c, 0x12}, {0xfd44c0, 0xf27bc0}, {0xc0000f4c00, ...}, ...})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:494 +0x36e
+6.5840/labrpc.(*Server).dispatch(0xc0000087e0, {{0xf2f5c0, 0xc000021970}, {0xf7e92c, 0x12}, {0xfd44c0, 0xf27bc0}, {0xc0000f4c00, 0x14b, 0x200}, ...})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:418 +0x1e5
+6.5840/labrpc.(*Network).processReq.func1()
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:240 +0x3f
+created by 6.5840/labrpc.(*Network).processReq in goroutine 3189
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:239 +0x1e5
+
+goroutine 330099 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc000475e00?}, {0xf27bc0, 0xc00033d780}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xf0d654?, 0x3?, {0x0?, 0x0?}}, {0xc00023c000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330045
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 3317 [chan receive, 9 minutes]:
+6.5840/labrpc.(*Network).processReq.func2()
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:258 +0x19
+created by 6.5840/labrpc.(*Network).processReq in goroutine 3189
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:257 +0x4dc
+
+goroutine 3200 [chan send, 9 minutes]:
+6.5840/raft.(*Raft).AppendEntries(0x0?, 0x0?, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:80 +0x47
+reflect.Value.call({0xc00005a500?, 0xc00004a7f8?, 0xc000643b18?}, {0xf7acd0, 0x4}, {0xc000643c70, 0x3, 0xc000643b48?})
+	E:/go1.21/src/reflect/value.go:596 +0xce7
+reflect.Value.Call({0xc00005a500?, 0xc00004a7f8?, 0xc00052cbe8?}, {0xc000643c70?, 0xc000529ba8?, 0xef45fd?})
+	E:/go1.21/src/reflect/value.go:380 +0xb9
+6.5840/labrpc.(*Service).dispatch(0xc000059e80, {0xf7e931, 0xd}, {{0xf2f5c0, 0xc000021970}, {0xf7e92c, 0x12}, {0xfd44c0, 0xf27bc0}, {0xc0000f5000, ...}, ...})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:494 +0x36e
+6.5840/labrpc.(*Server).dispatch(0xc0000087e0, {{0xf2f5c0, 0xc000021970}, {0xf7e92c, 0x12}, {0xfd44c0, 0xf27bc0}, {0xc0000f5000, 0x1a0, 0x200}, ...})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:418 +0x1e5
+6.5840/labrpc.(*Network).processReq.func1()
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:240 +0x3f
+created by 6.5840/labrpc.(*Network).processReq in goroutine 3199
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:239 +0x1e5
+
+goroutine 330055 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xfd44c0?}, {0xf27d40, 0xc000494040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x610, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330785 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d00c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x613, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329310 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc00036c020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x60c, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328990 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0x0?}, {0xf27d40, 0xc00075ab40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x5fe, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329862 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xc000198d80?}, {0xf27bc0, 0xc000244740}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc0005d0000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329861
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330482 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0xfd44c0?}, {0xf27d40, 0xc0001d09e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x623, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330775 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0001ceae0?}, {0xf27d40, 0xc0001d0060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x607, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328744 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xc00005db00?}, {0xf27d40, 0xc0002c6040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60f, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330365 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00032ae00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000b81000?, 0x749?, {0x0?, 0x0?}}, {0xc0001bf000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330359
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329945 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xc0002a47e0?}, {0xf27d40, 0xc0002c6000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x603, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330628 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0002447c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330627
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329788 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00081b680}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00047f000?, 0x749?, {0x0?, 0x0?}}, {0xc0007f2000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329780
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330086 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xfd44c0?}, {0xf27d40, 0xc00036c240}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x621, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329820 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x614, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330422 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0xc0002a5da0?}, {0xf27d40, 0xc0001d0620}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x617, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 4134 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x4, 0x0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 4133 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc000244190, 0x1aa)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc000360030)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a4b0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 330420 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc000088720?}, {0xf27d40, 0xc0001d0660}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x617, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328418 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xc0002a46c0?}, {0xf27d40, 0xc0003fe040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60d, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330449 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0003e7100}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000760800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004f00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330493
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330351 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00059d400}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc0005f0000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330436
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329771 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xc0001cf1a0?}, {0xf27d40, 0xc000604a00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x60e, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330084 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0x0?}, {0xf27d40, 0xc00036c200}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x621, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328647 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xc000089440?}, {0xf27d40, 0xc0003d4320}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x61a, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328705 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc000475500?}, {0xf27bc0, 0xc0003acb40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000633800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000394300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328714
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328243 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00051eb40?}, {0xf27bc0, 0xc0001aa1c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc000611000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328136
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328743 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc0000892c0?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x60f, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330174 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0000101e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x616, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327539 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000883140?}, {0xf27bc0, 0xc000759300}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00013a870?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc00075c000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327483
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329897 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00051e900?}, {0xf27bc0, 0xc0005e0500}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc000568000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329907
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330776 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xc0008824e0?}, {0xf27d40, 0xc0001d0080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x607, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329530 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00059d680}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0006b2800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000005500, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329525
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330528 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xc000882fc0?}, {0xf27d40, 0xc000384020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x612, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328807 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x5fd, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328198 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c7000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60c, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329220 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xc0002a5260?}, {0xf27d40, 0xc0003d4040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x5ff, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330594 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0x0?}, {0xf27d40, 0xc00036c040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x618, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330774 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0001d0040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x607, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329614 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0002c6100}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x601, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328781 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000e0ccc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000880000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328777
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330349 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0004ece80}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc000475140?, 0x69?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330434
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328131 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0001c6cc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc0003d1000?, 0x749?, {0x0?, 0x0?}}, {0xc000579000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328077
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328180 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0001d0020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x5fa, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 12410 [sync.Cond.Wait, 9 minutes]:
+sync.runtime_notifyListWait(0xc000e0c0d0, 0x28)
+	E:/go1.21/src/runtime/sema.go:527 +0x15d
+sync.(*Cond).Wait(0xd293c0?)
+	E:/go1.21/src/sync/cond.go:70 +0x85
+6.5840/raft.(*UnboundedQueue).DequeueAll(0xc000f30030)
+	F:/code/go/mit6.8540/6.5840/src/raft/util.go:72 +0x85
+6.5840/raft.(*Raft).ProcessApplyQueue(0xc00013a5a0)
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:481 +0x36
+created by 6.5840/raft.Make in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:557 +0x3d6
+
+goroutine 327334 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00051a500}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000518000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327333
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329351 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001d4840}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xf0d654?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329350
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330053 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0xc0001ce0c0?}, {0xf27d40, 0xc0003d4940}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x610, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330181 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xc00005da40?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x604, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330301 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000215420}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x611, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330304 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0003846e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x611, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329105 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xc0009ccde0?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x61c, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330087 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0xf0c34a?}, {0xf27d40, 0xc000010640}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x621, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330036 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc00074e600?}, {0xf27bc0, 0xc0006bd300}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000880000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000184300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330000
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329770 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xc0009cc3c0?}, {0xf27d40, 0xc000604a60}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60e, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328988 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00075ab00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x5fe, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329819 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0000101e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x614, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327756 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000011da0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x60a, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330215 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xc0009cdb00?}, {0xf27bc0, 0xc000244940}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc0003d0800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330214
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330054 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0003d4960}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x610, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329432 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xc000089260?}, {0xf27d40, 0xc00036c020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x600, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330217 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc0009cdb00?}, {0xf27bc0, 0xc0006bd040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000557800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330213
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330557 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0x0?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x606, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329179 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000e0d400}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000b80000?, 0x700?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329178
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330777 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xc0001ce060?}, {0xf27d40, 0xc0001d0020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x607, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329953 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000244780}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00077cfc0?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329999
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329401 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0xc000088c60?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x612, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329222 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0003d4080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x5ff, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330538 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc000e221e0?}, {0xf27bc0, 0xc0003992c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc00013a690?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc00039c000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330549
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329936 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xc00005cea0?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x60f, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329092 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000285e80}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc0002e2000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329077
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330355 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0000890e0?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x605, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330401 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xf27c00?}, {0xf27d40, 0xc0001d0a40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x623, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329592 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00081b6c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000475ec0?, 0x6b?, {0x0?, 0x0?}}, {0xc00066a000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329542
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328695 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000883b60?}, {0xf27bc0, 0xc0003923c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00013a870?, 0x701?, {0xf2f740?, 0xc000276a00?}}, {0xc000384000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328663
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330757 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x619, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330760 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c8a0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0002c6020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x619, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329994 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00036c060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x615, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330630 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00017b140}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0007e7800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330626
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330303 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0x0?}, {0xf27d40, 0xc000384c00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x611, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329826 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0x0?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x602, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328264 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000010f80}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x607, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328416 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0002c6000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x608, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329547 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc0009cc8a0?}, {0xf27bc0, 0xc000250780}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329543
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330182 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x604, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329913 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc000e0db00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc00041f800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329909
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330754 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00039fbc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc00059b000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000396300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330725
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329890 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00050a5c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc000198fc0?, 0x69?, {0xf2f740?, 0xc000276a00?}}, {0xc0002c0000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329859
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329005 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc0009ccf00?}, {0xf27bc0, 0xc0004122c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0003d0000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329001
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329246 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0003d58a0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x611, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329221 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0002a4300?}, {0xf27d40, 0xc0003d4060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x5ff, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329937 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xc000882de0?}, {0xf27d40, 0xc0002c6060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60f, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329307 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00062bc00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xf0d654?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329306
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330356 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xc0001ce360?}, {0xf27d40, 0xc0001d05e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x605, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328256 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00036c040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x618, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328473 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0002f0640}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0004f9000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000296300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328363
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329181 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0004fdac0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0005f3000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329177
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329104 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d00e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x61c, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 19356 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x0, 0xc00005d8c0?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 329615 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0001cf080?}, {0xf27d40, 0xc000538000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x601, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330718 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xc0009cc5a0?}, {0xf27d40, 0xc0002c6000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x624, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327879 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc00036d540}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x605, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329600 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x61f, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329883 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc00074e600?}, {0xf27bc0, 0xc0004fc600}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc000742000?, 0x7bba?, {0xf2f740?, 0xc000276a00?}}, {0xc000144000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329908
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329316 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x61d, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329311 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xc0000888a0?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x60c, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329355 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000296800}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0002b0000?, 0x7bba?, {0xf2f740?, 0xc000276a00?}}, {0xc000004c00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329348
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329617 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c60c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x601, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329892 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00030ebc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc0005d1000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc0002c0300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329860
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330176 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0001d0000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x616, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329827 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000010280}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x602, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330236 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xc0002a5440?}, {0xf27d40, 0xc00036c000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x622, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 16405 [chan receive, 9 minutes]:
+6.5840/raft.(*config).applier(0xc000062280, 0x1, 0xc000106840?)
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:162 +0x6e
+created by 6.5840/raft.(*config).start1 in goroutine 6
+	F:/code/go/mit6.8540/6.5840/src/raft/config.go:324 +0x63b
+
+goroutine 329587 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c740, {0xf7efac?, 0xc0001cfe00?}, {0xf27d40, 0xc0003d4780}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x60d, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327928 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000e0c740}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc00005cea0?, 0xa2?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327927
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328262 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc000011500}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x607, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330354 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b20, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc000384420}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x605, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329976 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc00074f200?}, {0xf27bc0, 0xc0001d2c80}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000677000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc0001c2300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329905
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330283 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000345600}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0006f0800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000338300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330199
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328478 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xc0008828a0?}, {0xf27d40, 0xc00036c040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x60e, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329041 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc000883920?}, {0xf27bc0, 0xc0002fc0c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc00013a870?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc00035c000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329078
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328976 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0003a8d00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0002f4000?, 0x7bba?, {0xf2f740?, 0xc000276a00?}}, {0xc0003b0000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329000
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330049 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc000059a00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330048
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330784 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xc00005df20?}, {0xf27d40, 0xc0001d00e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x613, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328666 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001b8c40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000190000?, 0x7b00?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328665
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329399 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc0001cf9e0?}, {0xf27d40, 0xc0000101c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x612, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330559 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b80, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c6020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x606, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330602 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc00077d200?}, {0xf27bc0, 0xc0001aa8c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0x257?, 0x280?, {0xf2f740?, 0xc000276a00?}}, {0xc0000e2000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330545
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330558 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xfd44c0?}, {0xf27d40, 0xc00036c060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x606, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329616 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xc000882f60?}, {0xf27d40, 0xc0002c60e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x601, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330714 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0001d4540}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00094c800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc0001d2300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330709
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328581 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00050a400}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000006700?, 0xa2?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328580
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329430 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0009cd740?}, {0xf27d40, 0xc00036c060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x600, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329549 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000262d00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000520800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004c00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329544
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330180 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc0009cd680?}, {0xf27d40, 0xc0000101c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x604, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329698 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0000948c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc000198e40?, 0x63?, {0xf2f740?, 0xc000276a00?}}, {0xc00016e000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329577
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328355 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000198fc0?}, {0xf27bc0, 0xc00040b4c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xf0d654?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc0004f6000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328383
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330782 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c6c0, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c6060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x613, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327859 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc000198e40?}, {0xf27bc0, 0xc0002513c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000676000?, 0x749?, {0x0?, 0x0?}}, {0xc00020c000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327677
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329137 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xc00077d800?}, {0xf27bc0, 0xc0004fff40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0x176?, 0x180?, {0x0?, 0x0?}}, {0xc0005a8000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329175
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330717 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x624, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328915 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c460, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc00036c040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x61b, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330338 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000443a00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc000199d40?, 0x6b?, {0xf2f740?, 0xc000276a00?}}, {0xc000005200, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330296
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330527 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xc0000889c0?}, {0xf27d40, 0xc000384080}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x612, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328648 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0004f6020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x61a, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330363 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc00008dec0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000978300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330362
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329003 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0xc0009ccf00?}, {0xf27bc0, 0xc0001d44c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0x176?, 0x180?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329002
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329598 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c480, {0xf7efac?, 0xc0001cf500?}, {0xf27d40, 0xc0001d0000}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x61f, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 327753 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000463340}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000802800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000004f00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327729
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328045 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0004c59c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc000b6d140?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328044
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328805 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0xc000088480?}, {0xf27d40, 0xc0001d0060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x5fd, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329769 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xc00005dce0?}, {0xf27d40, 0xc000604a40}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x60e, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329398 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0000101a0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x612, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330073 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00062d100}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc000404000?, 0xb4?, {0x0?, 0x0?}}, {0xc0005d2000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329998
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 327693 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0xc000089200?}, {0xf27bc0, 0xc0002b1fc0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc00013a870?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc0004ce000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327660
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330419 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xfd44c0?}, {0xf27d40, 0xc0001d0640}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x617, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330065 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9c0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc0002447c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x2, 0x1, {0xc000557000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc0000c0000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330063
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328918 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4c0, {0xf7efac?, 0xc0002a4b40?}, {0xf27d40, 0xc00036c020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x4, 0x61b, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328178 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b40, {0xf7efac?, 0x0?}, {0xf27d40, 0xc0001d0060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x5fa, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328903 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc00039d900}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00077e000?, 0x749?, {0x0?, 0x0?}}, {0xc00036e000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328863
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330318 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c980, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc0007009c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x0, 0x1, {0xc00051fbc0?, 0x6b?, {0x0?, 0x0?}}, {0xc0001ee000, 0x175, 0x200}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330295
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329992 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c820, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0002c6020}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x0, 0x615, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330688 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc000e225a0?}, {0xf27bc0, 0xc000393640}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc00013a5a0?, 0x1?, {0xf2f740?, 0xc000276a00?}}, {0xc000396000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330724
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329312 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xf0c3d6?}, {0xf27d40, 0xc0002c6180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60c, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330447 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc00077dec0?}, {0xf27bc0, 0xc0003b4b80}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0004ca000?, 0x7bba?, {0xf2f740?, 0xc000276a00?}}, {0xc000004c00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330492
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 330758 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc0002a5ec0?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x619, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328707 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xc0002a4ba0?}, {0xf27d40, 0xc0003d4040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x609, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328910 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c720, {0xf7efac?, 0xc000089980?}, {0xf27d40, 0xc000010180}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x60a, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330526 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xc000882c00?}, {0xf27d40, 0xc000384060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x612, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330299 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000408ec0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc00013a690?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004c00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330298
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329911 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000245400}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xc0005d0000?, 0x700?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329910
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328142 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000648ec0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0005d1000?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc00055af00, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 328137
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 327177 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000244b00}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc0005d0800?, 0x749?, {0xf2f740?, 0xc000276a00?}}, {0xc000138300, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 327172
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 328372 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc000a06b60, {0xf7efac?, 0xc0002a41e0?}, {0xf27d40, 0xc0001d06e0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x5fb, 0x1ef, 0xa)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 15490
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 328417 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c700, {0xf7efac?, 0xc0009cdaa0?}, {0xf27d40, 0xc000010160}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x2, 0x608, 0x1a6, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 11
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330759 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c880, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c6040}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x619, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329836 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c4a0, {0xf7efac?, 0xc00005cc00?}, {0xf27d40, 0xc0001d0780}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x3, 0x620, 0x0, 0x0)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 8
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 330367 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xd314c5?}, {0xf27bc0, 0xc000351380}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xc000458000?, 0x7bba?, {0xf2f740?, 0xc000276a00?}}, {0xc000978900, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 330360
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329784 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004ca00, {0xf7e92c?, 0x0?}, {0xf27bc0, 0xc000244240}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x4, 0x1, {0xf0d654?, 0x0?, {0xf2f740?, 0xc000276a00?}}, {0xc000004600, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329783
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329974 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c9a0, {0xf7e92c?, 0xc00074f200?}, {0xf27bc0, 0xc000e0c700}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendAppendEntriesRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:116
+6.5840/raft.(*Raft).sendAppendEntriesRequestToFollower(0xc00013a2d0, 0x1, 0x1, {0xf0d654?, 0x3?, {0xf2f740?, 0xc000276a00?}}, {0xc0001c2000, 0x14, 0x20}, ...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:191 +0xff
+created by 6.5840/raft.(*Raft).leaderSendLogs.func1 in goroutine 329904
+	F:/code/go/mit6.8540/6.5840/src/raft/raft.go:415 +0x1e5
+
+goroutine 329818 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xc000088000?}, {0xf27d40, 0xc0000101c0}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x614, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+
+goroutine 329605 [chan receive]:
+6.5840/labrpc.(*ClientEnd).Call(0xc00004c840, {0xf7efac?, 0xf0027a?}, {0xf27d40, 0xc0002c6060}, {0xf27c00, 0x1195300})
+	F:/code/go/mit6.8540/6.5840/src/labrpc/labrpc.go:112 +0x246
+6.5840/raft.(*Raft).sendRequestVoteRequest(...)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:108
+6.5840/raft.(*Raft).sendVoteRequestToPeers.func1(0x1, 0x613, 0x1a4, 0x3)
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:140 +0xa5
+created by 6.5840/raft.(*Raft).sendVoteRequestToPeers in goroutine 14
+	F:/code/go/mit6.8540/6.5840/src/raft/request.go:139 +0x125
+exit status 2
+FAIL	6.5840/raft	600.738s
