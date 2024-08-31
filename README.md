@@ -19,7 +19,7 @@ raft 论文 https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf
 ```bash
 cd .\6.5840\src\raft
 ```
-2. 测试某一个部分
+2. 单次测试某一个部分
 ```bash
 go test -run 2A
 go test -run TestInitialElection2A
