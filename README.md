@@ -47,3 +47,16 @@ python dstest.py -n 100 -p 128 TestRPCBytes2B
 
 ### raft部分框架图
 ![img.png](img.png)
+
+
+### Raft日志同步步骤：
+
+1.Propose：TiKV将收到的SQL请求转化为Raft日志；
+
+2.Append：Leader副本将Raft日志持久化到本地的RocksDB Raft中（RocksDB写）；
+
+3.Replicate：Leader副本将Raft日志发送给其他TiKV节点上自己的Follower副本。Follower副本在收到Raft日志后，也要持久化到自己本地的RocksDB Raft中（Append）；
+
+4.Committed：Follower副本在将收到的Raft日志持久化到自己的本地存储后，会向Leader副本返回一个确认信息。当超过半数的副本（包括Leader副本在内）都完成Append后，Raft日志同步的状态变为Committed；
+
+5.Apply：Leader副本将Raft日志应用到本地的RocksDB KV中（RocksDB写）。（Apply步骤不保证Follower副本也已经将Raft日志应用到本地的RocksDB KV中）
