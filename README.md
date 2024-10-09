@@ -8,8 +8,6 @@ raft 实现总结 https://www.mubu.com/doc/2prW5zqFYmb
 
 raft 一致性总结 https://www.mubu.com/doc/1ZoHdMBk9Cb
 
-raft test和踩坑记录 https://mubu.com/app/edit/home/2KNq7ixmm_r
-
 raft 论文 https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf
 
 参考资料 https://mit-public-courses-cn-translatio.gitbook.io/mit6-824/lecture-07-raft2/7.3-hui-fu-jia-su-backup-acceleration
@@ -46,16 +44,17 @@ python dstest.py -n 100 -p 128 TestRPCBytes2B
 
 
 ### raft部分框架图
-![img.png](img.png)
+![raft.png](raft.png)
 
 
-### Raft日志同步步骤：
+### 同步步骤：
+![arch.png](arch.png)
 
-1.Propose：TiKV将收到的SQL请求转化为Raft日志；
+1.Propose：node将收到的SQL请求转化为Raft日志；
 
 2.Append：Leader副本将Raft日志持久化到本地的RocksDB Raft中（RocksDB写）；
 
-3.Replicate：Leader副本将Raft日志发送给其他TiKV节点上自己的Follower副本。Follower副本在收到Raft日志后，也要持久化到自己本地的RocksDB Raft中（Append）；
+3.Replicate：Leader副本将Raft日志发送给其他节点上自己的Follower副本。Follower副本在收到Raft日志后，也要持久化到自己本地的RocksDB Raft中（Append）；
 
 4.Committed：Follower副本在将收到的Raft日志持久化到自己的本地存储后，会向Leader副本返回一个确认信息。当超过半数的副本（包括Leader副本在内）都完成Append后，Raft日志同步的状态变为Committed；
 
